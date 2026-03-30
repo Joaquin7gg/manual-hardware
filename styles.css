@@ -1259,6 +1259,10 @@ body.ciberlabs-page {
   }
 }
 
+.topbar {
+    position: static;
+  }
+
 
 
 @media (max-width: 720px) {
@@ -1270,6 +1274,10 @@ body.ciberlabs-page {
 
     .lightbox {
     padding: 0.5rem;
+  }
+
+   .topbar {
+    position: static;
   }
 
   .lightbox-content {
