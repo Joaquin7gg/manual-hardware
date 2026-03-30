@@ -13,8 +13,3 @@ Estructura del proyecto web:
   - lab-seguro.html
   - ciber-labs.html
 
-Cómo usarlo:
-1. Sustituye los bloques “Añade aquí una captura de pantalla” por tus imágenes reales.
-2. Puedes meter las imágenes en una carpeta assets/ y referenciarlas desde cada página.
-3. Sube todo a un repositorio de GitHub.
-4. Activa GitHub Pages desde Settings > Pages y selecciona la rama principal.
