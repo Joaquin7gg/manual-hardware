@@ -12,4 +12,4 @@ Estructura del proyecto web:
   - kali.html
   - lab-seguro.html
   - ciber-labs.html
-
+  -img
