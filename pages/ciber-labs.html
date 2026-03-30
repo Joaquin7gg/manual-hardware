@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorios de ciberseguridad | Manual de Hardware</title>
+  <meta name="description" content="Página para agrupar tus laboratorios y explicarlos de forma muy visual y didáctica.">
+  <link rel="icon" type="image/png" href="../img/1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="ciberlabs-page">
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="../index.html">
+        <span class="brand-badge">HW</span>
+        <span>Manual de Hardware y Ciberseguridad</span>
+      </a>
+<nav class="nav-links">
+  <a class="" href="../index.html">Inicio</a>
+  <a class="" href="configuracion.html">Configuración</a>
+  <a class="" href="montaje.html">Montaje</a>
+  <a class="" href="herramientas.html">Herramientas</a>
+  <a class="" href="analisis.html">Análisis</a>
+  <a class="" href="benchmarks.html">Benchmarks</a>
+  <a class="" href="uefi.html">UEFI</a>
+  <a class="" href="kali.html">Kali</a>
+  <a class="" href="lab-seguro.html">Lab Ético</a>
+  <a class="active" href="ciber-labs.html">CiberLabs</a>
+  <a class="" href="sobre-mi.html">Sobre mí</a>
+</nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumbs">
+          <a href="../index.html">Inicio</a>
+          <span>›</span>
+          <span>Laboratorios de ciberseguridad</span>
+        </div>
+        
+        <h1>Laboratorios de ciberseguridad</h1>
+        <p>En esta página se agrupan los laboratorios de ciberseguridad para ofrecer una experiencia de aprendizaje visual y didáctica.</p>
+      </div>
+    </section>
+
+    <div class="container page-layout">
+      <aside class="toc">
+        <h3>En esta página</h3>
+        <ul>
+          <li><a href="#mrrobot">Mr. Robot</a></li>
+          <li><a href="#deathnote">Deathnote</a></li>
+          <li><a href="#matrix">Matrix</a></li>
+          <li><a href="#dobby">Dobby</a></li>
+        </ul>
+      </aside>
+
+      <div class="content">
+
+<section class="content-section theme-mrrobot" id="mrrobot">
+  
+
+  <div class="section-cover">
+    <img src="../img/ciber/robot/46.png" alt="Cabecera del laboratorio Mr. Robot">
+  </div>
+
+  <h2>Mr. Robot</h2>
+  <p class="lead">Resolución completa del laboratorio Mr. Robot, desde la configuración del entorno hasta la obtención de privilegios de administrador.</p>
+
+<div class="theme-mrrobot">
+  <table class="lab-specs-table">
+    <thead>
+      <tr>
+        <th>Ficha Técnica</th>
+        <th>Detalles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="spec-label">Dificultad</td>
+        <td>Fácil / Media</td>
+      </tr>
+      <tr>
+        <td class="spec-label">SO Objetivo</td>
+        <td>Linux (Ubuntu)</td>
+      </tr>
+      <tr>
+        <td class="spec-label">Servicios Explotados</td>
+        <td>HTTP/HTTPS (WordPress)</td>
+      </tr>
+      <tr>
+        <td class="spec-label">Técnicas Clave</td>
+        <td>Enumeración Web, Inyección de Reverse Shell, Cracking MD5, SUID Escalation (Nmap).</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  <p>En este laboratorio se sigue una cadena de ataque bastante completa, empezando por el reconocimiento de la máquina y terminando con el acceso total al sistema. A lo largo del proceso se verá cómo descubrir servicios web, encontrar pistas ocultas, obtener credenciales y aprovechar un panel de WordPress para conseguir ejecución de código. Después, una vez dentro de la máquina, se continúa con la enumeración de usuarios, archivos y contraseñas hasta llegar a la escalada final de privilegios. Es una práctica muy útil para entender cómo se conectan varias fases típicas de un entorno real de hacking.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Configuración de red interna en VirtualBox</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/1.png" alt="Configuración de red interna en VirtualBox para el laboratorio Mr. Robot">
+    <figcaption class="single-figure-caption">Configuración del adaptador de red en VirtualBox para aislar el laboratorio en una red interna.</figcaption>
+  </figure>
+
+  <p>Para empezar, se configura la red de la máquina Kali en VirtualBox usando el modo Red interna. Esto permite que Kali y la máquina vulnerable se comuniquen entre sí dentro de una red aislada. El nombre de la red interna (<span class="kbd">red_segura</span>) debe coincidir en ambas máquinas para que queden dentro del mismo segmento.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Error al instalar dirsearch por falta de red</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/2.png" alt="Error al instalar dirsearch por falta de resolución DNS en Kali">
+    <figcaption class="single-figure-caption">Intento fallido de instalar dirsearch por un problema de resolución DNS en Kali.</figcaption>
+  </figure>
+
+  <p>En esta terminal se intenta instalar <span class="kbd">dirsearch</span> con el comando <span class="kbd">sudo apt-get install dirsearch</span>. <span class="kbd">sudo</span> ejecuta el comando con privilegios de administrador, y <span class="kbd">apt-get install</span> instala paquetes desde los repositorios. La instalación falla porque Kali no puede resolver el dominio <span class="kbd">http.kali.org</span>, es decir, hay un problema de red o DNS. Este error suele aparecer cuando la máquina no tiene salida a internet al estar dentro de la red interna. Para instalarlo, hay que apagar la máquina, conectarla con Adaptador puente e instalarlo.</p>
+
+  <p><span class="kbd">dirsearch</span> es una herramienta de fuerza bruta de contenidos web que se usa para descubrir directorios, archivos, paneles y rutas ocultas en un servidor. Funciona probando automáticamente muchas rutas de una lista predefinida y analizando las respuestas HTTP, por ejemplo códigos <span class="kbd">200</span>, <span class="kbd">301</span>, <span class="kbd">403</span> o <span class="kbd">404</span>. En este laboratorio sirve para localizar recursos interesantes como paneles de administración, ficheros sensibles o rutas no visibles desde la página principal, que pueden dar pistas o abrir nuevas vías de explotación.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Descubrimiento de hosts y escaneo con Nmap</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/3.png" alt="Descubrimiento de hosts con arp-scan y escaneo Nmap">
+    <figcaption class="single-figure-caption">Descubrimiento de hosts con ARP y escaneo detallado con Nmap para identificar servicios activos en la máquina objetivo.</figcaption>
+  </figure>
+
+  <p>Se hace primero un descubrimiento de hosts con <span class="kbd">sudo arp-scan -l</span>, que sirve para localizar dispositivos activos en la red local mediante peticiones ARP. Gracias a ello se identifican las direcciones <span class="kbd">10.38.1.1</span> y <span class="kbd">10.38.1.110</span>, confirmando cuál es la máquina objetivo dentro del laboratorio. Después se ejecuta <span class="kbd">nmap -sC -sV 10.38.1.110</span>, donde <span class="kbd">-sC</span> lanza scripts básicos de reconocimiento y <span class="kbd">-sV</span> intenta detectar versiones de los servicios. El resultado muestra los puertos <span class="kbd">80</span> y <span class="kbd">443</span> abiertos con Apache, mientras que el <span class="kbd">22</span> aparece cerrado. Esta información deja claro que la superficie de ataque principal está en los servicios web HTTP y HTTPS.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Primera visita web al objetivo</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/4.png" alt="Página principal web de la máquina Mr. Robot">
+    <figcaption class="single-figure-caption">Primera comprobación web de la máquina objetivo accediendo a su servicio HTTP desde el navegador.</figcaption>
+  </figure>
+
+  <p>Una vez descubierta la IP y comprobado que tiene abiertos los servicios HTTP y HTTPS, se visita desde el navegador la dirección <span class="kbd">10.38.1.110</span>, descubriendo la página principal de la máquina objetivo. La web muestra una interfaz inspirada en terminal con temática de Mr. Robot, lo que confirma que el servicio HTTP está activo. Esta comprobación inicial sirve para validar que la máquina responde por web y que la IP detectada es correcta. También permite empezar la fase de reconocimiento visual del objetivo. A partir de aquí, lo normal es combinar navegación manual con enumeración de directorios y recursos ocultos.</p><figure class="single-figure">
+    <h3 class="figure-title">Enumeración de directorios con dirsearch</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/5.png" alt="Enumeración de directorios web con dirsearch">
+    <figcaption class="single-figure-caption">Enumeración de directorios web con dirsearch para localizar rutas ocultas en el servidor objetivo.</figcaption>
+  </figure>
+
+  <p>En este punto se lanza un descubrimiento de directorios con <span class="kbd">sudo dirsearch -u http://10.38.1.110</span>. La opción <span class="kbd">-u</span> especifica la URL objetivo sobre la que se va a trabajar. En la salida aparecen rutas interesantes como <span class="kbd">/admin</span>, además de múltiples respuestas HTTP como <span class="kbd">200</span>, <span class="kbd">301</span> y <span class="kbd">403</span>. Esta fase resulta clave para localizar paneles de acceso, recursos sensibles o puntos de entrada útiles para la explotación.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Filtrado de respuestas HTTP 200</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/6.png" alt="Filtrado de respuestas HTTP 200 en resultados de dirsearch">
+    <figcaption class="single-figure-caption">Filtrado de respuestas HTTP 200 para quedarse solo con los recursos válidos descubiertos durante la enumeración.</figcaption>
+  </figure>
+
+  <p>A continuación se filtran los resultados guardados por <span class="kbd">dirsearch</span> con el comando <span class="kbd">cat /home/joaquin/reports/http_10.38.1.110/_26-03-04_12-45-34.txt | grep 200</span>. <span class="kbd">cat</span> muestra el contenido completo del archivo de resultados y <span class="kbd">grep 200</span> extrae únicamente las líneas cuyo código HTTP es 200, es decir, recursos accesibles correctamente. Este filtrado permite centrarse solo en las rutas realmente existentes y evita perder tiempo con redirecciones o errores. Gracias a ello destacan elementos interesantes como <span class="kbd">/license</span>, <span class="kbd">/robots.txt</span>, <span class="kbd">/readme.html</span> y varias rutas de WordPress. Es una forma rápida de priorizar la enumeración.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Pista encontrada en la ruta /license</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/7.png" alt="Ruta license con cadena codificada">
+    <figcaption class="single-figure-caption">Acceso a la ruta "/license", donde se encuentra una cadena codificada usada como pista para obtener credenciales.</figcaption>
+  </figure>
+
+  <p>En esta imagen se navega manualmente a la ruta <span class="kbd">/license</span>, una de las páginas encontradas durante la enumeración. La página contiene el mensaje <span class="kbd">do you want a password or something?</span> junto a una cadena codificada en la parte inferior, lo que apunta a una pista dejada intencionadamente por la máquina. Este paso demuestra la importancia de revisar visualmente los recursos encontrados y no quedarse solo con los nombres de archivo. El contenido sugiere que la cadena puede esconder una contraseña o una credencial útil. Desde aquí, el siguiente paso lógico es intentar decodificarla.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Decodificación de credenciales en Base64</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/8.png" alt="Decodificación Base64 de las credenciales">
+    <figcaption class="single-figure-caption">Decodificación en Base64 de la cadena encontrada en "/license" para obtener unas credenciales de acceso.</figcaption>
+  </figure>
+
+  <p>Se usa el comando <span class="kbd">echo 'ZWxsaW90QW5JdTMDY1Mgo=' | base64 -d</span> para decodificar la cadena encontrada anteriormente. <span class="kbd">echo</span> imprime el texto introducido y <span class="kbd">base64 -d</span> lo transforma desde formato Base64 a texto legible. El resultado obtenido es <span class="kbd">elliot:ER28-0652</span>, que revela unas credenciales potencialmente válidas para acceder a la aplicación. Este paso convierte una pista aparentemente opaca en información directamente utilizable. La decodificación es una técnica básica, pero muy habitual en retos y laboratorios.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Acceso al panel de WordPress</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/9.png" alt="Login en WordPress con las credenciales obtenidas">
+    <figcaption class="single-figure-caption">Inicio de sesión en el panel de WordPress con las credenciales obtenidas durante la fase de reconocimiento.</figcaption>
+  </figure>
+
+  <p>Se introducen las credenciales descubiertas en el formulario de <span class="kbd">WordPress</span> alojado en <span class="kbd">/wp-login.php</span>. El usuario utilizado es <span class="kbd">elliot</span> y la contraseña corresponde al valor recuperado tras decodificar la cadena Base64. Este inicio de sesión confirma que la enumeración y el análisis de pistas han permitido obtener acceso legítimo al panel de administración. A partir de aquí, el laboratorio entra en una fase más avanzada, ya que disponer de acceso a WordPress puede abrir la puerta a ejecución de código o escalada. Es un punto de inflexión bastante claro dentro del ataque.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Generación de la reverse shell en PHP</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/10.png" alt="Generación de reverse shell en PHP">
+    <figcaption class="single-figure-caption">Generación de una reverse shell en PHP con la IP y el puerto del equipo atacante.</figcaption>
+  </figure>
+
+  <p>Tras conseguir acceso al panel de WordPress, el siguiente paso es generar una reverse shell para inyectarla dentro de la página. Por eso, en esta captura se accede a la web <span class="kbd">revshells.com</span> para generar una reverse shell en PHP adaptada a la IP y al puerto del atacante. Una reverse shell es un fragmento de código que, al ejecutarse en la máquina víctima, inicia una conexión hacia el equipo atacante y le entrega una consola remota. Aquí se configura la IP <span class="kbd">10.38.1.111</span> y el puerto <span class="kbd">9001</span>, que son los datos a los que la máquina vulnerable intentará conectarse. Esta página facilita la creación del payload ya preparado, evitando escribirlo manualmente. Es un paso previo a incrustar ese código en un archivo ejecutable de WordPress.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Inserción del payload en 404.php</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/11.png" alt="Inserción de reverse shell en 404.php de WordPress">
+    <figcaption class="single-figure-caption">Inserción de la reverse shell en el archivo "404.php" del tema activo de WordPress.</figcaption>
+  </figure>
+
+  <p>Dentro del panel de administración de WordPress, se abre el archivo <span class="kbd">404.php</span> del tema activo desde el editor de apariencia. El archivo de error 404 resulta interesante porque se ejecuta cuando se solicita una ruta inexistente, así que puede aprovecharse para disparar el payload. En este caso se pega el código de la reverse shell generado anteriormente para que WordPress lo ejecute al provocar un error 404. Esta técnica saca partido al acceso administrativo conseguido previamente para insertar código PHP en un archivo del tema. Es una manera de conseguir ejecución remota de código desde la propia aplicación web.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Confirmación de edición del archivo</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/12.png" alt="Confirmación de guardado del archivo editado">
+    <figcaption class="single-figure-caption">Confirmación de guardado del archivo modificado, dejando preparada la ejecución de la reverse shell.</figcaption>
+  </figure>
+
+  <p>Ahora aparece el mensaje <span class="kbd">File edited successfully</span>, lo que confirma que WordPress ha guardado correctamente el contenido modificado del archivo <span class="kbd">404.php</span>. Esto significa que el payload PHP ya ha quedado escrito en el servidor y está listo para ejecutarse cuando se invoque esa plantilla. No implica todavía que exista una conexión, pero sí que la aplicación ha sido alterada con éxito desde el panel de administración. A partir de aquí solo falta preparar el listener y forzar la ejecución del archivo modificado. Es la confirmación de que la inyección de código ha funcionado.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Listener Netcat a la espera de conexión</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/13.png" alt="Listener con Netcat preparado para recibir la shell">
+    <figcaption class="single-figure-caption">Verificación de la IP del atacante y apertura de un listener con Netcat para recibir la conexión remota.</figcaption>
+  </figure>
+
+  <p>Se prepara un listener con <span class="kbd">nc -lvnp 9001</span>. Netcat, o <span class="kbd">nc</span>, se usa aquí para escuchar conexiones entrantes; <span class="kbd">-l</span> indica modo escucha, <span class="kbd">-v</span> activa la salida detallada, <span class="kbd">-n</span> evita resolución DNS y <span class="kbd">-p 9001</span> fija el puerto. Este listener es imprescindible porque será el punto al que la víctima se conectará cuando ejecute el payload. Sin esta escucha activa, la reverse shell no podría completarse.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Ejecución forzada de la plantilla 404</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/14.png" alt="Activación del 404.php modificado para lanzar la reverse shell">
+    <figcaption class="single-figure-caption">Activación de la reverse shell accediendo a una ruta inexistente para forzar la ejecución de la plantilla "404.php".</figcaption>
+  </figure>
+
+  <p>Se fuerza la ejecución del archivo <span class="kbd">404.php</span> visitando una dirección inexistente dentro del sitio, en este caso una ruta inventada. Al no encontrar esa página, WordPress carga la plantilla de error 404 que previamente había sido modificada con la reverse shell. Aunque el navegador muestra un error <span class="kbd">404 Not Found</span>, internamente el servidor ha procesado el archivo PHP y ha intentado lanzar la conexión hacia el listener. Este paso sirve precisamente para activar el payload sin necesidad de acceder a una ruta real del sitio. El error visible en pantalla forma parte del comportamiento esperado para disparar la plantilla alterada.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Shell remota recibida en el atacante</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/15.png" alt="Recepción de reverse shell y comandos básicos de enumeración">
+    <figcaption class="single-figure-caption">Recepción de la reverse shell y reconocimiento básico del sistema remoto con comandos de enumeración.</figcaption>
+  </figure>
+
+  <p>Se observa que la reverse shell ha funcionado porque <span class="kbd">nc -lvnp 9001</span> recibe una conexión desde la IP de la máquina víctima. Una vez dentro se ejecutan comandos básicos como <span class="kbd">pwd</span>, <span class="kbd">whoami</span> e <span class="kbd">ifconfig</span> para orientarse dentro del sistema comprometido. <span class="kbd">pwd</span> muestra el directorio actual, <span class="kbd">whoami</span> indica el usuario con el que se ha obtenido acceso e <span class="kbd">ifconfig</span> enseña la configuración de red de la máquina remota. La salida confirma que la shell se ha abierto con el usuario <span class="kbd">daemon</span>, que tiene privilegios limitados. Este reconocimiento inicial sirve para saber desde dónde continuar la postexplotación.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Información sensible en robots.txt</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/16.png" alt="Contenido del archivo robots.txt con rutas ocultas">
+    <figcaption class="single-figure-caption">Consulta de "robots.txt" para descubrir rutas ocultas relevantes dentro del laboratorio.</figcaption>
+  </figure>
+
+  <p>En esta parte se visita el archivo <span class="kbd">robots.txt</span>, que es un fichero usado por los sitios web para indicar a los rastreadores qué rutas existen o cuáles no deberían indexarse. En este caso, el contenido revela dos recursos bastante interesantes, <span class="kbd">fsocity.dic</span> y <span class="kbd">key-1-of-3.txt</span>, que no eran visibles desde la página principal. Este tipo de archivo suele revisarse durante la enumeración porque a veces expone rutas sensibles o pistas del reto. La presencia de esos nombres confirma que el servidor contiene tanto una clave como un diccionario útil para ataques posteriores. Es una fuente de información muy valiosa en la fase de reconocimiento.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Descarga de la primera clave</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/17.png" alt="Descarga de la primera clave con wget">
+    <figcaption class="single-figure-caption">Descarga y obtención de la primera clave a partir de la ruta descubierta durante la enumeración.</figcaption>
+  </figure>
+
+  <p>En esta terminal se descarga la primera clave con <span class="kbd">wget http://10.38.1.110/key-1-of-3.txt</span>. El comando <span class="kbd">wget</span> se usa para descargar archivos directamente desde una URL y guardarlos en la máquina local. Después, al mostrar el contenido del fichero, se obtiene la primera key del laboratorio, lo que confirma que la ruta encontrada en <span class="kbd">robots.txt</span> era válida. Este paso materializa uno de los objetivos principales del reto. Además, demuestra cómo una simple enumeración web puede llevar a información crítica.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Descarga del diccionario fsocity.dic</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/18.png" alt="Descarga del diccionario fsocity.dic">
+    <figcaption class="single-figure-caption">Descarga del diccionario "fsocity.dic", útil para fuerza bruta y cracking en fases posteriores.</figcaption>
+  </figure>
+
+  <p>Aquí también se utiliza <span class="kbd">wget</span>, esta vez con <span class="kbd">wget http://10.38.1.110/fsocity.dic</span>, para descargar el diccionario expuesto por el servidor. Ese archivo contiene una gran cantidad de palabras y puede emplearse más adelante en ataques de fuerza bruta o cracking de contraseñas. En laboratorios como este, disponer de un diccionario personalizado del propio objetivo suele ser especialmente útil porque refleja términos relevantes del entorno. La descarga se completa correctamente y deja preparado un recurso importante para las siguientes fases. Es una pieza clave para avanzar hacia nuevas credenciales.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Enumeración interna y hallazgo del hash</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/19.png" alt="Enumeración del sistema y hallazgo del hash MD5">
+    <figcaption class="single-figure-caption">Enumeración del sistema tras obtener shell, localizando la segunda clave y un hash MD5 en el directorio del usuario "robot".</figcaption>
+  </figure>
+
+  <p>Se vuelve a recibir acceso a la máquina mediante <span class="kbd">nc -lvnp 9001</span> y, una vez dentro, se recorre el sistema con comandos como <span class="kbd">whoami</span>, <span class="kbd">pwd</span>, <span class="kbd">cd</span>, <span class="kbd">ls</span>, <span class="kbd">ls -l</span> y <span class="kbd">cat</span>. <span class="kbd">cd</span> permite cambiar de directorio, <span class="kbd">ls</span> lista archivos, <span class="kbd">ls -l</span> los muestra con detalles de permisos y propietarios, y <span class="kbd">cat</span> imprime el contenido de un fichero. Gracias a esa enumeración se llega al directorio del usuario <span class="kbd">robot</span>, donde aparecen <span class="kbd">key-2-of-3.txt</span> y <span class="kbd">password.raw-md5</span>. Aunque la segunda clave todavía no puede leerse por permisos, sí se obtiene un hash MD5 desde <span class="kbd">password.raw-md5</span>, que será útil para intentar escalar privilegios.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Resolución del hash MD5</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/20.png" alt="Resolución del hash MD5 en CrackStation">
+    <figcaption class="single-figure-caption">Resolución del hash MD5 en CrackStation para obtener la contraseña del usuario "robot".</figcaption>
+  </figure>
+
+  <p>Se pega el hash MD5 obtenido antes en CrackStation para intentar recuperar la contraseña en texto claro. Este tipo de páginas compara el hash introducido con enormes bases de datos de hashes ya resueltos y, si encuentra coincidencia, devuelve la contraseña original. En este caso, el resultado revela la clave <span class="kbd">abcdefghijklmnopqrstuvwxyz</span>, que después se usará para cambiar del usuario <span class="kbd">daemon</span> al usuario <span class="kbd">robot</span>. Este paso permite convertir un hash aparentemente inútil en una credencial válida. Es una técnica muy habitual cuando se encuentra un hash sin salt.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Cambio al usuario robot y segunda clave</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/21.png" alt="Cambio al usuario robot y lectura de la segunda clave">
+    <figcaption class="single-figure-caption">Estabilización de la shell, cambio al usuario "robot" y obtención de la segunda clave del laboratorio.</figcaption>
+  </figure>
+
+  <p>En esta fase se mejora la shell con <span class="kbd">python3 -c 'import pty;pty.spawn("/bin/bash")'</span>, que sirve para obtener una terminal más estable e interactiva. Después se usa <span class="kbd">su robot</span> para cambiar al usuario <span class="kbd">robot</span> introduciendo la contraseña descubierta anteriormente. Finalmente, con <span class="kbd">cat key-2-of-3.txt</span>, se muestra el contenido de la segunda clave, que antes no podía leerse por falta de permisos. El comando <span class="kbd">cat</span> imprime en pantalla el contenido de un fichero de texto. Este cambio de usuario marca un avance importante en la escalada de privilegios.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Búsqueda de binarios con permisos especiales</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/22.png" alt="Búsqueda de binarios con permisos especiales">
+    <figcaption class="single-figure-caption">Búsqueda de programas con permisos especiales para localizar una posible vía de acceso al administrador.</figcaption>
+  </figure>
+
+  <p>Ahora se realiza una búsqueda por todo el sistema para localizar programas que tengan permisos especiales. Para ello se usa el comando <span class="kbd">find / -perm +6000 2&gt;/dev/null | grep '/bin/'</span>, que sirve para encontrar archivos que podrían ejecutarse con más privilegios de los normales. Entre los resultados aparece <span class="kbd">nmap</span>, un programa que en esta máquina puede aprovecharse para subir de nivel dentro del sistema. Este paso es importante porque permite detectar una posible puerta hacia el usuario administrador. En otras palabras, aquí se está buscando una debilidad interna para poder avanzar.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Escalada final a root</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/robot/23.png" alt="Escalada a root mediante nmap y obtención de la tercera clave">
+    <figcaption class="single-figure-caption">Tras consultar GTFOBins y ejecutar los comandos indicados, se consigue acceso como administrador y se obtiene la tercera clave.</figcaption>
+  </figure>
+
+  <p>En esta última fase, tras consultar <span class="kbd">GTFOBins</span>, se comprueba que el programa <span class="kbd">nmap</span> puede aprovecharse para conseguir más permisos en el sistema. Después se ejecuta <span class="kbd">/usr/local/bin/nmap --interactive</span> para abrir su modo interactivo y, a continuación, <span class="kbd">!/bin/sh</span> para lanzar una consola con privilegios de administrador. Esto se verifica con <span class="kbd">whoami</span>, que devuelve <span class="kbd">root</span>. Finalmente, con <span class="kbd">cd /root</span> y <span class="kbd">cat key-3-of-3.txt</span>, se accede a la carpeta del administrador y se lee la tercera clave. Con este paso se completa el laboratorio al obtener el control total de la máquina.</p>
+
+  <div class="info-box">
+    <p class="note-title">Conclusión</p>
+    <p>Este laboratorio resulta muy completo y entretenido, porque combina varias fases típicas de un entorno de hacking real en una máquina con temática de "Mr. Robot". A lo largo del proceso se trabaja sobre todo con los servicios web "HTTP" y "HTTPS", haciendo reconocimiento con "nmap", enumeración de rutas con "dirsearch" y revisión manual de recursos como "robots.txt". También se ve cómo aprovechar un acceso a "WordPress" para conseguir ejecución remota de código mediante una reverse shell, cómo moverse dentro del sistema con una shell limitada, identificar información útil como hashes y diccionarios, y realizar una escalada de privilegios hasta "root" apoyándose en "GTFOBins". En general, es un laboratorio muy útil para reforzar conceptos de enumeración, explotación web, postexplotación y escalada, y además deja la sensación de estar siguiendo una cadena de ataque completa de principio a fin.</p>
+  </div>
+</section>
+
+<section class="content-section theme-deathnote" id="deathnote">
+  
+
+  <div class="section-cover">
+    <img src="../img/ciber/death/46.png" alt="Cabecera del laboratorio Deathnote">
+  </div>
+
+  <h2>Deathnote</h2>
+  <p class="lead">Resolución completa del laboratorio Deathnote, desde la enumeración inicial hasta la escalada final a root.</p>
+
+<div class="theme-deathnote">
+  <table class="lab-specs-table">
+    <thead>
+      <tr>
+        <th>Ficha Técnica</th>
+        <th>Detalles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="spec-label">Dificultad</td>
+        <td>Principiante / Media</td>
+      </tr>
+      <tr>
+        <td class="spec-label">SO Objetivo</td>
+        <td>Linux</td>
+      </tr>
+      <tr>
+        <td class="spec-label">Servicios Explotados</td>
+        <td>HTTP (WordPress), SSH</td>
+      </tr>
+      <tr>
+        <td class="spec-label">Técnicas Clave</td>
+        <td>Virtual Hosting (/etc/hosts), Esteganografía básica, Movimiento Lateral (SSH Keys), Decodificación (Brainfuck/Base64).</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>En este laboratorio se ve muy bien cómo una máquina puede ir dejando pistas poco a poco, y cómo una buena enumeración permite convertirlas en acceso real. Primero se revisarán la web y los archivos expuestos, localizando recursos interesantes y relacionando la información que vaya apareciendo. Más adelante se utilizarán esas pistas para obtener credenciales válidas, entrar por SSH y seguir investigando dentro del sistema. Es una máquina muy educativa porque enseña que muchas veces avanzar no depende de atacar más fuerte, sino de fijarse mejor en los detalles.</p>
+  <figure class="single-figure">
+    <h3 class="figure-title">Descubrimiento inicial del objetivo</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/1.png" alt="Descubrimiento de hosts y escaneo inicial en Deathnote">
+    <figcaption class="single-figure-caption">Descubrimiento de hosts y primer escaneo de puertos sobre la víctima.</figcaption>
+  </figure>
+
+  <p>Primero se comprueba la IP de la máquina atacante con <span class="kbd">ip a</span>, que muestra que Kali tiene la dirección <span class="kbd">192.168.56.104</span> dentro de la red del laboratorio. Después se usa <span class="kbd">sudo arp-scan -l</span> para descubrir qué otros equipos están activos en ese segmento, y ahí ya aparecen varias IP candidatas. Por último, con <span class="kbd">nmap -sC -sV 192.168.56.103</span> se analiza el host más interesante y se identifican dos servicios abiertos: SSH en el puerto <span class="kbd">22</span> y HTTP en el puerto <span class="kbd">80</span>. Ese paso confirma que la máquina objetivo está accesible y que ya hay una base clara para seguir con la enumeración.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Asociación manual del dominio local</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/2.png" alt="Asociación manual de deathnote.vuln en el archivo hosts">
+    <figcaption class="single-figure-caption">Asociación manual del dominio “deathnote.vuln” con la IP de la máquina objetivo.</figcaption>
+  </figure>
+
+  <p>En un primer momento se probó a visitar la web con la IP de la víctima. Sin embargo, daba error. Por ello, se añadió una entrada al archivo hosts con <span class="kbd">echo … | sudo tee -a /etc/hosts</span> para asociar la IP <span class="kbd">192.168.56.103</span> al nombre <span class="kbd">deathnote.vuln</span>. Esto evita depender del DNS y permite navegar y enumerar el sitio web usando su nombre esperado, algo muy útil cuando la aplicación utiliza virtual hosts.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Acceso correcto a la instancia de WordPress</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/3.png" alt="Acceso correcto a la instancia de WordPress de Deathnote">
+    <figcaption class="single-figure-caption">Acceso correcto a la instancia de WordPress de la máquina Deathnote.</figcaption>
+  </figure>
+
+  <p>En esta imagen ya se ve la página principal de WordPress cargando correctamente en el navegador usando la URL <span class="kbd">http://deathnote.vuln/wordpress/</span>. Esto confirma que la modificación del archivo hosts ha funcionado y que el servicio web responde como se esperaba. A nivel de reconocimiento visual, la web muestra un único post llamado KIRA y un diseño bastante simple, lo que hace pensar que las pistas no van a estar en funcionalidades complejas sino en el contenido, el código fuente o rutas ocultas. Es un buen momento para empezar a revisar comentarios HTML, enlaces internos y recursos cargados por la página.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Pista visible en el contenido de la web</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/4.png" alt="Pista visible con la cadena iamjustic3 en la web">
+    <figcaption class="single-figure-caption">Pista visible en la web que sugiere una posible contraseña: “iamjustic3”.</figcaption>
+  </figure>
+
+  <p>Ahora es el momento de apreciar una parte muy importante del contenido de la web: en el lateral aparece el texto <span class="kbd">my fav line is iamjustic3</span> y debajo otra frase atribuida a L. Esta pista resulta clave porque parece señalar una posible contraseña o palabra relevante para una autenticación posterior. En una máquina de este tipo, detalles así suelen estar escondidos en comentarios, secciones de hint o textos poco visibles, por eso conviene revisar la página completa y no quedarse solo con lo más llamativo. Esta imagen documenta justo el momento en que se localiza una credencial potencial a partir del propio contenido del sitio.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Página de pistas del WordPress</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/5.png" alt="Página de pistas del WordPress en Deathnote">
+    <figcaption class="single-figure-caption">Página de pistas del WordPress con indicaciones para continuar la enumeración.</figcaption>
+  </figure>
+
+  <p>En esta página se accede a la sección de pistas de WordPress, concretamente a <span class="kbd">/wordpress/index.php/hint/</span>. El contenido es bastante directo y orienta la enumeración hacia dos frentes: encontrar un archivo <span class="kbd">notes.txt</span> en el servidor o revisar el comentario de L dentro del código de la web. Aunque visualmente parezca una simple página informativa, en este tipo de máquinas suele marcar el siguiente paso lógico del reconocimiento. Aquí lo importante no era lanzar ataques a lo loco, sino leer bien la pista y usarla para acotar la búsqueda. Es un buen ejemplo de cómo muchas veces la propia aplicación va guiando el proceso si se presta atención al detalle.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Revisión del HTML desde terminal</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/6.png" alt="Revisión del HTML con curl y less">
+    <figcaption class="single-figure-caption">Revisión del HTML de la página.</figcaption>
+  </figure>
+
+  <p>Como en otros laboratorios el código HTML ya había mostrado ciertas pistas, se opta por visualizarlo con <span class="kbd">curl</span> y <span class="kbd">less</span>, por eso abajo aparece <span class="kbd">(END)</span>. El comando <span class="kbd">curl</span> descarga el contenido web en texto plano y <span class="kbd">less</span> permite leerlo con calma desde terminal, algo muy útil para detectar redirecciones, comentarios y rutas ocultas sin depender solo del navegador. En esta ocasión no aparece nada especialmente relevante en el código.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Enumeración de directorios con Gobuster</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/7.png" alt="Enumeración de directorios con Gobuster">
+    <figcaption class="single-figure-caption">Enumeración de directorios con Gobuster sobre la raíz del sitio web.</figcaption>
+  </figure>
+
+  <p>Se utiliza <span class="kbd">gobuster</span> para hacer fuerza de reconocimiento sobre la raíz del sitio, buscando directorios y ficheros accesibles. El comando incluye <span class="kbd">-u</span> para indicar la URL objetivo, <span class="kbd">-w</span> para usar un diccionario de rutas comunes, <span class="kbd">-x</span> para probar extensiones como <span class="kbd">txt</span>, <span class="kbd">php</span>, <span class="kbd">html</span> y <span class="kbd">bak</span>, y <span class="kbd">-t 40</span> para lanzar 40 hilos en paralelo. El resultado devuelve varias rutas interesantes, pero las más útiles son <span class="kbd">/manual</span>, <span class="kbd">/robots.txt</span> y <span class="kbd">/wordpress</span>. Gracias a esta enumeración, ya no se trabaja a ciegas, sino con ubicaciones concretas que pueden contener nuevas pistas o contenido sensible.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Consulta de robots.txt</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/8.png" alt="Consulta de robots.txt en Deathnote">
+    <figcaption class="single-figure-caption">Consulta visual de “robots.txt” y obtención de la pista que lleva a “/important.jpg”.</figcaption>
+  </figure>
+
+  <p>Después de localizar <span class="kbd">/robots.txt</span>, se consulta su contenido con <span class="kbd">curl -s http://deathnote.vuln/robots.txt</span>. La opción <span class="kbd">-s</span> hace que la salida sea silenciosa y muestre solo el contenido útil, sin barras de progreso ni ruido extra. El archivo incluye un mensaje informal, pero lo importante es que revela una pista clave: <span class="kbd">added hint on /important.jpg</span>. Este tipo de archivo, que normalmente se usa para orientar a los buscadores, aquí se convierte en una fuente de información para el pentesting y termina marcando el siguiente recurso que conviene revisar.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Descarga local de important.jpg</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/9.png" alt="Descarga de important.jpg con wget">
+    <figcaption class="single-figure-caption">Descarga local del archivo “important.jpg” indicado en la pista de “robots.txt”.</figcaption>
+  </figure>
+
+  <p>En esta fase se descarga el recurso señalado por la pista con el comando <span class="kbd">wget http://deathnote.vuln/important.jpg</span>. <span class="kbd">wget</span> se usa para guardar en local un archivo servido por la web, y aquí confirma que la descarga se completa correctamente con un tamaño muy pequeño, solo 277 bytes. Ese detalle ya hace sospechar, porque para ser una imagen el fichero pesa demasiado poco. La idea en este punto era comprobar si realmente se trataba de una imagen válida o si era un archivo trampa camuflado con extensión <span class="kbd">jpg</span>. Esta comprobación sirve para no quedarse solo con lo que dice la extensión del archivo.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Fallo al abrir el supuesto JPG</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/10.png" alt="Error al abrir important.jpg como imagen">
+    <figcaption class="single-figure-caption">Error al intentar visualizar “important.jpg” como si fuera una imagen convencional.</figcaption>
+  </figure>
+
+  <p>En esta parte se intenta abrir <span class="kbd">important.jpg</span> con el visor gráfico de imágenes, pero el sistema devuelve un error indicando que no puede procesar algunos archivos. Ese fallo resulta bastante revelador, porque sugiere que el recurso no es una imagen real o que está malformado a propósito. En un laboratorio de este tipo, cuando algo no abre donde debería, normalmente merece la pena revisarlo desde terminal en lugar de descartarlo. Esta captura refleja justo ese momento en el que el comportamiento extraño del archivo obliga a cambiar de enfoque.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Identificación real del archivo</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/11.png" alt="Verificación de important.jpg con file">
+    <figcaption class="single-figure-caption">Verificación del tipo real de “important.jpg”, identificado como texto ASCII.</figcaption>
+  </figure>
+
+  <p>Para comprobar la naturaleza real del fichero se usa el comando <span class="kbd">file important.jpg</span>. <span class="kbd">file</span> inspecciona el contenido interno del archivo en vez de fiarse de la extensión, y devuelve que <span class="kbd">important.jpg</span> es en realidad <span class="kbd">ASCII text</span>. Ese resultado confirma que el supuesto JPG es un texto plano disfrazado, una técnica bastante típica para esconder pistas sencillas durante la enumeración. A partir de aquí ya no tenía sentido seguir tratándolo como imagen, sino abrirlo como texto para recuperar la información oculta.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Mensaje oculto dentro del falso JPG</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/12.png" alt="Contenido oculto en important.jpg">
+    <figcaption class="single-figure-caption">Contenido oculto en el falso important.jpg, indicando que los posibles usuarios están en user.txt y que la contraseña debe buscarse en la sección de pistas del sitio.</figcaption>
+  </figure>
+
+  <p>En esta imagen se abre el contenido del archivo disfrazado y aparece el mensaje oculto. El texto indica que la información relacionada con el nombre de usuario para el login se encuentra en <span class="kbd">user.txt</span>, mientras que la contraseña no aparece ahí y debe buscarse en la sección de pistas del sitio. Esta pista resulta especialmente útil porque conecta directamente dos elementos ya localizados durante la enumeración: por un lado <span class="kbd">user.txt</span>, como fuente de posibles usuarios, y por otro la sección hint de WordPress, como referencia para encontrar la contraseña. A partir de este momento, la búsqueda de credenciales deja de ser genérica y pasa a estar guiada por indicaciones concretas proporcionadas por la propia máquina.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Enumeración técnica con WPScan</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/13.png" alt="Enumeración de WordPress con WPScan">
+    <figcaption class="single-figure-caption">Enumeración de la instalación WordPress con WPScan para identificar componentes y exposición.</figcaption>
+  </figure>
+
+  <p>Se lanza <span class="kbd">wpscan</span> contra la instalación de WordPress para recopilar información técnica sobre la aplicación. El escáner detecta detalles útiles como la versión de WordPress, la presencia de <span class="kbd">xmlrpc.php</span>, el archivo <span class="kbd">readme.html</span>, el directorio <span class="kbd">uploads</span> y el tema activo. Aunque esta salida no muestra una vulnerabilidad explotable directa, sí ayuda a perfilar la superficie de ataque y a descartar caminos. El camino más interesante, tras explorar otros, es el de <span class="kbd">uploads</span>.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Listado accesible del directorio uploads</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/14.png" alt="Listado del directorio uploads con archivos expuestos">
+    <figcaption class="single-figure-caption">Listado accesible del directorio “uploads” con ficheros interesantes expuestos públicamente.</figcaption>
+  </figure>
+
+  <p>Tras probar en otros puntos del sitio, se accede al listado del directorio <span class="kbd">/wordpress/wp-content/uploads/2021/07</span>, algo que ya había adelantado <span class="kbd">wpscan</span> al indicar que el directorio de subidas tenía el indexado habilitado. Esto resulta interesante porque permite navegar por los ficheros cargados en WordPress sin necesidad de autenticarse. Entre las imágenes del sitio aparecen dos archivos especialmente llamativos: <span class="kbd">notes.txt</span> y <span class="kbd">user.txt</span>, que no encajan con el resto del contenido gráfico y de los que además ya se habían visto pistas anteriormente. Además, cuando en un directorio público aparecen ficheros de texto en mitad de recursos multimedia, casi siempre merece la pena revisarlos porque suelen contener pistas o credenciales.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Contenido expuesto de user.txt</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/15.png" alt="Contenido de user.txt en Deathnote">
+    <figcaption class="single-figure-caption">Contenido de “user.txt”, con una lista de nombres potencialmente útiles para autenticación o enumeración.</figcaption>
+  </figure>
+
+  <p>En esta captura se accede al archivo <span class="kbd">user.txt</span> dentro del directorio de subidas y se visualiza su contenido en texto plano desde el navegador. El fichero muestra una lista de nombres relacionados con el universo de Death Note, mezclando variantes en mayúsculas y minúsculas, lo que sugiere una posible lista de usuarios, candidatos o palabras relevantes para autenticación. Aunque por sí solo no da acceso directo, este tipo de archivo acota mucho la búsqueda y proporciona contexto útil para probar credenciales o interpretar pistas posteriores. En una memoria queda bien reflejarlo porque documenta cómo se localizaron posibles usuarios sin necesidad de atacar el formulario a ciegas.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Lista de contraseñas candidatas</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/16.png" alt="Contenido de notes.txt en Deathnote">
+    <figcaption class="single-figure-caption">Contenido de “notes.txt”, con una posible lista de contraseñas candidatas.</figcaption>
+  </figure>
+
+  <p>Se accede al archivo <span class="kbd">notes.txt</span> dentro del directorio de subidas y se visualiza su contenido en texto plano desde el navegador. A diferencia de <span class="kbd">user.txt</span>, aquí no aparecen nombres, sino una lista de cadenas que tienen pinta de posibles contraseñas o variantes relacionadas con la temática de la máquina. Este hallazgo resulta útil porque complementa la lista de usuarios encontrada antes y permite construir un juego básico de credenciales candidatas. En este punto ya no se trabaja solo con intuiciones, sino con dos ficheros concretos expuestos públicamente por la aplicación.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Descarga local de user.txt y notes.txt</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/17.png" alt="Descarga local de user.txt y notes.txt">
+    <figcaption class="single-figure-caption">Descarga local de “user.txt” y “notes.txt” para su análisis desde terminal.</figcaption>
+  </figure>
+
+  <p>Después de identificar los archivos interesantes en el directorio <span class="kbd">uploads</span>, se descargan localmente con <span class="kbd">wget</span> para poder analizarlos con más comodidad desde terminal. En la captura se guardan tanto <span class="kbd">user.txt</span> como <span class="kbd">notes.txt</span>, que pasan a estar disponibles en la máquina atacante como ficheros de texto plano. Este paso no descubre nada nuevo por sí mismo, pero sí facilita trabajar con ambas listas sin depender del navegador. Además, deja preparado el material para combinaciones posteriores entre posibles usuarios y contraseñas.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Fuerza bruta controlada con Hydra</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/18.png" alt="Comprobación automatizada de credenciales con Hydra">
+    <figcaption class="single-figure-caption">Comprobación automatizada de credenciales contra SSH y hallazgo de un acceso válido.</figcaption>
+  </figure>
+
+  <p>En esta fase se utiliza la herramienta <span class="kbd">hydra</span> para automatizar la comprobación de combinaciones de usuario y contraseña contra el servicio SSH del objetivo. El comando toma como entrada <span class="kbd">user.txt</span> y <span class="kbd">notes.txt</span> y prueba las credenciales contra el puerto 22 de la máquina vulnerable. La salida termina mostrando una coincidencia válida, asociando el usuario <span class="kbd">l</span> con la contraseña <span class="kbd">death4me</span>. Este resultado confirma que la enumeración previa era correcta y permite pasar de la fase de reconocimiento a la de acceso inicial.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Primer inicio de sesión por SSH</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/19.png" alt="Inicio de sesión por SSH con las credenciales halladas">
+    <figcaption class="single-figure-caption">Inicio de sesión por SSH usando las credenciales obtenidas en la fase anterior.</figcaption>
+  </figure>
+
+  <p>Una vez localizadas las credenciales válidas, se intenta el acceso remoto con <span class="kbd">ssh</span>. Primero aparece un intento mal formado, pero después se corrige el formato incluyendo el usuario delante de la IP, y se acepta la huella digital del host para continuar. A continuación, se introduce la contraseña descubierta y se establece la conexión con la máquina objetivo.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Acceso inicial y lectura de la primera flag</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/20.png" alt="Acceso inicial por SSH y lectura de user.txt">
+    <figcaption class="single-figure-caption">Acceso inicial al sistema por “ssh”, lectura de la primera flag y obtención de una nueva pista.</figcaption>
+  </figure>
+
+  <p>Se completa el acceso inicial a la máquina por <span class="kbd">ssh</span> utilizando las credenciales obtenidas previamente. Primero se acepta la huella digital del host y después se introduce la contraseña válida, estableciendo una sesión interactiva en el sistema. Una vez dentro, se listan los ficheros del directorio personal con <span class="kbd">ls</span> y se consulta <span class="kbd">user.txt</span> con <span class="kbd">cat</span>, obteniendo la primera prueba de acceso. El contenido de esta flag no solo confirma que la intrusión ha funcionado, sino que además deja una nueva pista cifrada que habrá que interpretar para poder seguir avanzando dentro del laboratorio.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Decodificación de la pista en Brainfuck</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/21.png" alt="Decodificación de la pista con un intérprete Brainfuck">
+    <figcaption class="single-figure-caption">Decodificación en “Brainfuck” de la pista encontrada tras el acceso inicial.</figcaption>
+  </figure>
+
+  <p>Se analiza la pista obtenida en la flag anterior utilizando una herramienta online de <span class="kbd">Brainfuck</span>. Tras introducir la cadena en el intérprete, el resultado muestra el mensaje <span class="kbd">think u got the shell, but you wont be able to…</span>, indicando que, aunque ya se ha conseguido acceso al sistema, todavía quedan restricciones o pasos adicionales para avanzar. Esta fase encaja como parte de la enumeración local posterior, ya que obliga a interpretar correctamente la pista antes de continuar con la escalada o el movimiento lateral.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Enumeración local y archivo no legible de kira</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/22.png" alt="Enumeración local inicial y archivo kira.txt no legible">
+    <figcaption class="single-figure-caption">Enumeración local inicial y detección de un archivo de “kira” no legible con el usuario actual.</figcaption>
+  </figure>
+
+  <p>Se continúa con la enumeración local una vez conseguido el acceso al sistema como <span class="kbd">l</span>. Primero se usa <span class="kbd">id</span> para comprobar a qué grupos pertenece el usuario actual y <span class="kbd">sudo -l</span> para verificar si dispone de permisos elevados, descartando una vía directa mediante <span class="kbd">sudo</span>. Después se revisa el contenido de <span class="kbd">/home</span> y del directorio personal de <span class="kbd">kira</span> con <span class="kbd">ls -al</span>. Allí se localiza el archivo <span class="kbd">kira.txt</span>, pero al intentar leerlo con <span class="kbd">cat</span> se obtiene un <span class="kbd">Permission denied</span>. Este paso permite identificar que, aunque no todos los ficheros de <span class="kbd">kira</span> son accesibles, sí merece la pena seguir revisando su directorio en busca de otros recursos útiles.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Revisión de la carpeta .ssh de kira</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/23.png" alt="Revisión de .ssh y authorized_keys del usuario kira">
+    <figcaption class="single-figure-caption">Revisión del directorio .ssh de “kira” y localización de una clave pública autorizada.</figcaption>
+  </figure>
+
+  <p>Se prosigue la revisión del directorio personal de <span class="kbd">kira</span> y se accede a su carpeta <span class="kbd">.ssh</span>, que sí es accesible con el usuario actual. Una vez dentro, se listan sus archivos con <span class="kbd">ls -al</span> y se muestra el contenido de <span class="kbd">authorized_keys</span> con <span class="kbd">cat</span>. La salida revela una clave pública SSH autorizada, confirmando que el acceso mediante claves está habilitado para ese usuario. Este hallazgo es importante porque abre la posibilidad de reutilizar una clave privada localizada en otra cuenta del sistema.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Enumeración del SSH del usuario l</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/24.png" alt="Enumeración del directorio personal y .ssh del usuario l">
+    <figcaption class="single-figure-caption">Enumeración del directorio personal y de la configuración SSH del usuario “l”.</figcaption>
+  </figure>
+
+  <p>Ahora se vuelve al directorio personal del usuario <span class="kbd">l</span> para comparar sus recursos con los observados en la cuenta de <span class="kbd">kira</span>. Primero se revisa su directorio con <span class="kbd">ls -al</span>, donde aparecen <span class="kbd">user.txt</span> y también un directorio <span class="kbd">.ssh</span>. Después se entra en <span class="kbd">.ssh</span>, se listan sus ficheros con <span class="kbd">ls -al</span> y se comprueba que contiene elementos como <span class="kbd">id_rsa</span>, <span class="kbd">id_rsa.pub</span>, <span class="kbd">known_hosts</span> y <span class="kbd">authorized_keys</span>. La presencia de <span class="kbd">id_rsa</span> resulta especialmente relevante, ya que puede corresponderse con la autenticación por claves observada anteriormente en la cuenta de <span class="kbd">kira</span>.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Comparación de authorized_keys</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/25.png" alt="Visualización de authorized_keys del usuario l">
+    <figcaption class="single-figure-caption">Visualización de “authorized_keys” en la cuenta de “l” y confirmación de una posible vía de movimiento lateral mediante SSH.</figcaption>
+  </figure>
+
+  <p>Se muestra directamente el contenido de <span class="kbd">authorized_keys</span> del usuario <span class="kbd">l</span> mediante <span class="kbd">cat</span>, después de un intento previo de abrirlo con <span class="kbd">vi</span>. Al comparar esta clave pública con la observada en <span class="kbd">authorized_keys</span> de <span class="kbd">kira</span>, se comprueba que ambas coinciden. Esto sugiere que la clave privada <span class="kbd">id_rsa</span> almacenada en la cuenta de <span class="kbd">l</span> puede reutilizarse para autenticarse como <span class="kbd">kira</span>, dejando preparada una vía bastante clara de movimiento lateral mediante SSH.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Movimiento lateral al usuario kira</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/26.png" alt="Acceso como kira reutilizando una clave SSH">
+    <figcaption class="single-figure-caption">Acceso exitoso como “kira” mediante reutilización de una clave SSH localizada durante la enumeración local.</figcaption>
+  </figure>
+
+  <p>En esta captura se aprovecha la confianza configurada mediante SSH para autenticarse como el usuario <span class="kbd">kira</span>. Primero se ajustan los permisos de la clave privada con <span class="kbd">chmod</span>, ya que SSH exige permisos restrictivos para utilizarla, y después se inicia una nueva conexión usando dicha clave para acceder como <span class="kbd">kira</span>. Tras aceptar la huella digital del host, la sesión se abre correctamente y el prompt cambia a <span class="kbd">kira@deathnote</span>, confirmando que el movimiento lateral ha funcionado. Este paso demuestra que la mala gestión de permisos y la reutilización de claves SSH permiten pivotar entre usuarios sin necesidad de conocer una nueva contraseña.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Lectura de kira.txt y nueva pista</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/27.png" alt="Lectura de kira.txt y decodificación en Base64">
+    <figcaption class="single-figure-caption">Lectura de “kira.txt” y decodificación de una nueva pista en Base64.</figcaption>
+  </figure>
+
+  <p>Se sigue la enumeración local ya como <span class="kbd">kira</span> dentro de su directorio personal. Se listan los ficheros con <span class="kbd">ls -al</span> y se localiza <span class="kbd">kira.txt</span>, cuyo contenido se muestra con <span class="kbd">cat</span>. Después se decodifica la cadena obtenida con <span class="kbd">echo … | base64 -d</span>, revelando una nueva pista: se pide proteger a una de dos personas, <span class="kbd">L</span> o <span class="kbd">Misa</span>.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Hallazgo de un directorio sospechoso en /opt</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/28.png" alt="Localización de un directorio sospechoso en /opt">
+    <figcaption class="single-figure-caption">Localización en “/opt” de un directorio sospechoso con nuevos archivos para analizar.</figcaption>
+  </figure>
+
+  <p>En esta parte se sigue la pista obtenida tras decodificar <span class="kbd">kira.txt</span> y se empieza a revisar el sistema en busca de algo relacionado con las nuevas referencias. Se accede a <span class="kbd">/opt</span> con <span class="kbd">cd /opt</span>, se listan sus contenidos con <span class="kbd">ls</span> y <span class="kbd">ls -al</span>, y aparece un directorio llamativo llamado <span class="kbd">fake-notebook-rule</span>, junto a otro llamado <span class="kbd">kira-case</span>. Después se entra en <span class="kbd">fake-notebook-rule</span>, donde ya se observan dos archivos interesantes: <span class="kbd">case.wav</span> y <span class="kbd">hint</span>. Este paso marca el hallazgo del siguiente punto clave de la postexplotación.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Análisis del falso archivo de audio</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/29.png" alt="Comprobación de que case.wav no es un audio real">
+    <figcaption class="single-figure-caption">Comprobación de que “case.wav” no es un audio real, sino que además esconde una pista.</figcaption>
+  </figure>
+
+  <p>A continuación se analiza el archivo <span class="kbd">case.wav</span> para comprobar su naturaleza real. Primero se usa <span class="kbd">file case.wav</span>, que lo identifica como texto ASCII, y después se visualiza su contenido con <span class="kbd">cat</span>. El resultado deja una pista bastante reveladora: <span class="kbd">cyberchef</span>.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Cadena hexadecimal oculta en case.wav</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/30.png" alt="Cadena hexadecimal oculta en case.wav">
+    <figcaption class="single-figure-caption">“case.wav” no es un audio real, sino una cadena hexadecimal oculta.</figcaption>
+  </figure>
+
+  <p>Para descubrir qué hay detrás de <span class="kbd">case.wav</span> se muestra su contenido con <span class="kbd">cat case.wav</span>, observándose una cadena en hexadecimal. Este resultado confirma que el archivo estaba disfrazado y que, en realidad, oculta información codificada en varias capas.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Primera transformación en CyberChef</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/31.png" alt="Transformación de hexadecimal a Base64 en CyberChef">
+    <figcaption class="single-figure-caption">Primera transformación en “CyberChef”, pasando de hexadecimal a una cadena en Base64.</figcaption>
+  </figure>
+
+  <p>Tal y como indicaba la pista, se lleva la cadena hexadecimal a <span class="kbd">CyberChef</span> y se aplica la operación <span class="kbd">From Hex</span>. El resultado obtenido ya no es hexadecimal, sino una nueva cadena con formato de Base64.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Decodificación completa de la credencial</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/32.png" alt="Obtención de la contraseña kiraisevil en CyberChef">
+    <figcaption class="single-figure-caption">Decodificación completa en “CyberChef” y obtención de la contraseña “kiraisevil”.</figcaption>
+  </figure>
+
+  <p>Se prosigue el proceso de decodificación en <span class="kbd">CyberChef</span> aplicando nuevas conversiones sobre la cadena anterior. Tras completar la secuencia adecuada, el resultado final muestra el texto <span class="kbd">passwd : kiraisevil</span>. Este hallazgo proporciona una credencial nueva y útil, vinculada al usuario comprometido, y deja preparado el siguiente paso para comprobar si puede aprovecharse con privilegios elevados.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Comprobación de privilegios sudo</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/33.png" alt="Verificación de privilegios sudo del usuario kira">
+    <figcaption class="single-figure-caption">Verificación con “sudo -l” de que el usuario “kira” puede ejecutar comandos como root.</figcaption>
+  </figure>
+
+  <p>En este momento se comprueban los privilegios del usuario <span class="kbd">kira</span> con <span class="kbd">sudo -l</span>, utilizando la contraseña recién obtenida. La salida indica que <span class="kbd">kira</span> puede ejecutar <span class="kbd">(ALL : ALL) ALL</span>, es decir, cualquier comando como cualquier usuario, lo que supone una vía directa de escalada a root. Este punto es decisivo porque convierte una simple contraseña en control administrativo total sobre la máquina.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Escalada final y lectura de root.txt</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/death/34.png" alt="Escalada final a root y lectura de root.txt">
+    <figcaption class="single-figure-caption">Escalada final a root y lectura de la flag definitiva en “root.txt”.</figcaption>
+  </figure>
+
+  <p>En esta última captura se intenta primero acceder a <span class="kbd">/root</span> sin privilegios con <span class="kbd">cd /root</span>, obteniendo un <span class="kbd">Permission denied</span>, y a continuación se emplea <span class="kbd">sudo su</span> para abrir una shell como root. Ya con privilegios máximos, se accede al directorio de root, se listan sus contenidos con <span class="kbd">ls</span> y se muestra <span class="kbd">root.txt</span> con <span class="kbd">cat</span>. La lectura de esta flag confirma la escalada completa y cierra el laboratorio con compromiso total del sistema.</p>
+
+  <div class="info-box">
+    <p class="note-title">Conclusión</p>
+    <p>Este laboratorio muestra bastante bien cómo una intrusión no siempre depende de una vulnerabilidad compleja, sino muchas veces de una cadena de pequeños fallos de configuración y pistas mal protegidas. A lo largo de la máquina se ve cómo una buena enumeración, tanto web como local, permite ir enlazando información aparentemente suelta hasta convertirla en acceso real al sistema. Primero se obtienen credenciales a partir de archivos expuestos y pistas en la aplicación, después se aprovechan permisos débiles y una mala gestión de claves SSH para moverse lateralmente entre usuarios, y finalmente se llega a root gracias a una contraseña oculta y a unos privilegios sudo excesivos. En conjunto, la máquina refuerza una idea muy importante en ciberseguridad: muchas veces no gana quien “ataca más”, sino quien enumera mejor y sabe interpretar cada detalle.</p>
+  </div>
+</section>
+
+<section class="content-section theme-matrix" id="matrix">
+  
+
+  <div class="section-cover">
+    <img src="../img/ciber/matrix/46.png" alt="Cabecera del laboratorio Matrix">
+  </div>
+
+  <h2>Matrix</h2>
+  <p class="lead">Resolución completa del laboratorio Matrix, desde la enumeración inicial hasta la obtención de acceso root y la lectura de la flag final.</p>
+
+<table class="lab-specs-table">
+    <thead>
+      <tr>
+        <th>Ficha Técnica</th>
+        <th>Detalles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="spec-label">Dificultad</td>
+        <td>Fácil / Media</td>
+      </tr>
+      <tr>
+        <td class="spec-label">SO Objetivo</td>
+        <td>Linux (Porteus)</td>
+      </tr>
+      <tr>
+        <td class="spec-label">Puertos Críticos</td>
+        <td>80, 31337 (HTTP), 22 (SSH)</td>
+      </tr>
+      <tr>
+        <td class="spec-label">Técnicas Clave</td>
+        <td>Escape de rbash (vi), Decodificación Brainfuck, Fuerza Bruta, Reconocimiento de Puertos.</td>
+      </tr>
+    </tbody>
+  </table>
+
+<p>En este laboratorio se plantea una resolución muy guiada por la observación y por la interpretación de pistas ocultas. Al principio se descubrirán servicios, se revisará el contenido de varias páginas y se analizarán cadenas codificadas hasta llegar a unas credenciales válidas para entrar por SSH. Una vez dentro, el reto cambia de enfoque y obliga a entender cómo funciona una shell restringida y cómo salir de ella usando herramientas ya disponibles en el sistema. Es una práctica muy interesante porque mezcla reconocimiento web, lógica, decodificación y escalada de privilegios en un recorrido bastante completo.</p>  <figure class="single-figure">
+    <h3 class="figure-title">Escaneo de red y descubrimiento del objetivo</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/1.png" alt="Escaneo de red y descubrimiento de servicios en la máquina objetivo Matrix">
+    <figcaption class="single-figure-caption">Escaneo de red y descubrimiento de servicios en la máquina objetivo.</figcaption>
+  </figure>
+
+  <p>Se ejecuta <span class="kbd">ip a</span>, comando que permite ver las interfaces de red y las direcciones IP asignadas, identificando que la máquina se encuentra en la red <span class="kbd">192.168.56.0/24</span>. Después se utiliza <span class="kbd">arp-scan -l</span>, herramienta que escanea la red local para descubrir dispositivos activos, encontrando la IP <span class="kbd">192.168.56.106</span> como objetivo. A continuación se lanza <span class="kbd">nmap -sC -sV 192.168.56.106</span>, donde <span class="kbd">-sC</span> ejecuta scripts por defecto y <span class="kbd">-sV</span> detecta versiones de servicios, identificando puertos abiertos como <span class="kbd">22</span> (SSH) y <span class="kbd">80/31337</span> (HTTP), lo que indica posibles puntos de entrada.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Página principal con temática de Matrix</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/2.png" alt="Página principal del objetivo con temática de Matrix">
+    <figcaption class="single-figure-caption">Página principal del objetivo con temática de Matrix.</figcaption>
+  </figure>
+
+  <p>Se accede mediante navegador a <span class="kbd">http://192.168.56.106</span>, mostrando una página con temática de Matrix y el mensaje <span class="kbd">Follow the White Rabbit</span>, lo que sugiere que se trata de un entorno tipo CTF donde pueden existir pistas ocultas dentro del sitio web o su código fuente.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Análisis del código fuente de la web</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/3.png" alt="Análisis del código fuente de la web principal">
+    <figcaption class="single-figure-caption">Análisis del código fuente de la web.</figcaption>
+  </figure>
+
+  <p>Se utilizan las herramientas de desarrollador del navegador (Inspector) para analizar el HTML y los recursos cargados, revisando scripts y estructura interna con el objetivo de encontrar información oculta o comentarios que no son visibles en la interfaz, técnica habitual en la fase de enumeración web.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Acceso al servicio del puerto 31337</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/4.png" alt="Acceso al servicio web expuesto en el puerto 31337">
+    <figcaption class="single-figure-caption">Acceso al servicio web expuesto en el puerto 31337.</figcaption>
+  </figure>
+
+  <p>Se observa el acceso a <span class="kbd">http://192.168.56.106:31337</span>, uno de los puertos previamente detectados con Nmap. La página muestra el nombre <span class="kbd">Cypher</span> y una cita de Matrix, lo que confirma que este servicio contiene contenido distinto al de la web principal y puede incluir nuevas pistas para continuar con la enumeración.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Identificación de una cadena codificada</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/5.png" alt="Identificación de una cadena codificada en el código fuente">
+    <figcaption class="single-figure-caption">Identificación de una cadena codificada en el código fuente de la página.</figcaption>
+  </figure>
+
+  <p>En esta fase se inspecciona el código fuente de la página del puerto <span class="kbd">31337</span> y se localiza una cadena aparentemente codificada dentro del HTML. Este paso resulta clave, ya que al no mostrarse información útil de forma visible, la revisión manual del código permite descubrir datos ocultos que pueden actuar como pista o credencial para las siguientes fases del reto.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Guardado de la cadena en un archivo</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/6.png" alt="Guardado de la cadena codificada en un archivo para su análisis">
+    <figcaption class="single-figure-caption">Guardado de la cadena codificada en un archivo para su posterior análisis.</figcaption>
+  </figure>
+
+  <p>Ahora se traslada la cadena descubierta a la terminal usando <span class="kbd">echo</span>, comando que imprime por pantalla el texto indicado y que en este caso también se redirige con <span class="kbd">&gt;</span> a un archivo llamado <span class="kbd">Cypher.matrix</span>. La redirección permite guardar el contenido en un fichero para trabajarlo con más comodidad después, mientras que <span class="kbd">ls</span> se utiliza para listar los archivos del directorio y comprobar que el fichero se ha creado correctamente.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Visualización del contenido del archivo</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/7.png" alt="Visualización del contenido del archivo identificado como Brainfuck">
+    <figcaption class="single-figure-caption">Visualización del contenido del archivo, identificado como código Brainfuck.</figcaption>
+  </figure>
+
+  <p>Se accede al archivo <span class="kbd">Cypher.matrix</span> desde el navegador y se observa un bloque de caracteres formado únicamente por símbolos como <span class="kbd">+</span>, <span class="kbd">-</span>, <span class="kbd">&lt;</span>, <span class="kbd">&gt;</span> y corchetes. Ese patrón es característico del lenguaje Brainfuck, por lo que el contenido deja de interpretarse como texto aleatorio y pasa a considerarse código que debe ser decodificado o interpretado.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Interpretación del código Brainfuck</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/8.png" alt="Interpretación del código Brainfuck y pista de credenciales">
+    <figcaption class="single-figure-caption">Interpretación del código Brainfuck y obtención de una pista de credenciales.</figcaption>
+  </figure>
+
+  <p>Se utiliza un intérprete online de Brainfuck para analizar el contenido extraído anteriormente. Al ejecutar el código, el resultado muestra un mensaje que revela una credencial parcial, indicando que el acceso debe realizarse con el usuario <span class="kbd">guest</span> y una contraseña incompleta, donde faltan los dos últimos caracteres. Esta salida aporta una pista directa para la fase de acceso inicial a la máquina.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Generación de diccionario y ataque con Hydra</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/9.png" alt="Generación de diccionario y obtención de credenciales válidas con Hydra">
+    <figcaption class="single-figure-caption">Generación de diccionario y obtención de credenciales válidas mediante Hydra.</figcaption>
+  </figure>
+
+  <p>Se ejecuta <span class="kbd">crunch 8 8 -t kll1l0r@@ -o dict.txt</span>, donde <span class="kbd">crunch</span> genera listas de palabras a medida y <span class="kbd">-t</span> define una plantilla con caracteres fijos y posiciones variables, creando así un diccionario con las dos posiciones desconocidas de la contraseña. Después se comprueba su creación con <span class="kbd">ls</span>. Finalmente se ejecuta <span class="kbd">hydra -l guest -P dict.txt 192.168.56.106 ssh</span>, donde <span class="kbd">hydra</span> prueba credenciales automáticamente, <span class="kbd">-l</span> indica el usuario, <span class="kbd">-P</span> el diccionario de contraseñas y <span class="kbd">ssh</span> el servicio atacado. El resultado permite recuperar la contraseña válida del usuario <span class="kbd">guest</span>.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Inicio de sesión remoto por SSH</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/10.png" alt="Inicio de sesión remoto por SSH con el usuario guest">
+    <figcaption class="single-figure-caption">Inicio de sesión remoto por SSH con el usuario guest.</figcaption>
+  </figure>
+
+  <p>Se establece conexión con <span class="kbd">ssh guest@192.168.56.106</span>, comando que inicia una sesión remota segura contra la máquina objetivo usando el usuario <span class="kbd">guest</span>. Durante la primera conexión aparece el aviso de autenticidad de la clave del host, algo normal cuando el servidor aún no está en <span class="kbd">known_hosts</span>, y tras aceptar la huella se introduce la contraseña obtenida anteriormente. El acceso se completa con éxito y se obtiene una shell interactiva en el sistema remoto.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Detección de una shell restringida</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/11.png" alt="Detección de una restricted shell mediante PATH y comandos disponibles">
+    <figcaption class="single-figure-caption">Detección de una restricted shell mediante comprobación de “PATH” y comandos disponibles.</figcaption>
+  </figure>
+
+  <p>Una vez dentro del sistema, se comprueba el comportamiento del entorno ejecutando <span class="kbd">ls</span> y <span class="kbd">pwd</span>. El comando <span class="kbd">pwd</span>, que muestra el directorio actual, devuelve <span class="kbd">/home/guest</span>, pero <span class="kbd">ls</span> falla porque la shell está restringida y no permite usar rutas explícitas o binarios fuera del entorno controlado. Además, al consultar <span class="kbd">PATH</span> se observa que apunta a <span class="kbd">/home/guest/prog</span>, lo que confirma que solo se pueden ejecutar programas concretos desde ese directorio. Esto permite identificar que se está trabajando dentro de una rbash o shell restringida.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Apertura de vi en el entorno restringido</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/12.png" alt="Apertura de vi dentro de la shell restringida">
+    <figcaption class="single-figure-caption">Apertura de vi dentro de la shell restringida como posible vector de escape.</figcaption>
+  </figure>
+
+  <p>En este paso se observa la apertura de <span class="kbd">vi</span>, editor disponible dentro del entorno restringido, mostrándose el mensaje <span class="kbd">No file 1/1 100%</span>, que indica que se ha abierto sin cargar ningún archivo. La presencia de <span class="kbd">vi</span> resulta interesante porque, en entornos restringidos, este tipo de binarios puede utilizarse para escapar de la shell limitada o para intentar modificar el entorno. En esta fase, <span class="kbd">vi</span> se convierte en una herramienta potencial para continuar la escalada o la evasión de restricciones.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Prueba fallida dentro de vi</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/13.png" alt="Escritura accidental en vi durante las pruebas de escape">
+    <figcaption class="single-figure-caption">Escritura accidental en “vi”, confirmando que el contenido se trata como texto y no como comando.</figcaption>
+  </figure>
+
+  <p>Se introduce <span class="kbd">!/bin/bash</span> dentro del editor, pero en lugar de ejecutarse como orden, el texto queda escrito en el buffer y aparece el estado <span class="kbd">No file [Modified]</span>. Esto indica que el editor se encontraba en modo inserción o que la orden no estaba siendo interpretada como comando interno de <span class="kbd">vi</span>, sino como contenido normal del documento. Este comportamiento permite confirmar que aún no se había conseguido ejecutar una shell desde el editor y que era necesario salir sin guardar o volver a intentar la interacción en modo comando.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Salida del editor sin guardar</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/14.png" alt="Salida de vi sin guardar los cambios">
+    <figcaption class="single-figure-caption">Salida de vi sin guardar los cambios realizados durante las pruebas.</figcaption>
+  </figure>
+
+  <p>Se inserta <span class="kbd">:q!</span> dentro de <span class="kbd">vi</span>, orden utilizada para salir del editor sin guardar el contenido escrito en el buffer. Esta acción resulta útil porque las pruebas anteriores habían modificado el documento vacío y no aportaban valor al proceso de explotación. De este modo, se reinicia el editor y se evita dejar contenido innecesario, manteniendo el entorno limpio antes de volver a probar una posible vía de escape desde <span class="kbd">vi</span>.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Invocación de bash desde vi</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/15.png" alt="Intento de invocar bash desde vi para escapar de la shell restringida">
+    <figcaption class="single-figure-caption">Intento de invocar /bin/bash desde vi para escapar de la shell restringida.</figcaption>
+  </figure>
+
+  <p>Se introduce <span class="kbd">:!/bin/bash</span> dentro del editor, sintaxis que en <span class="kbd">vi</span> se utiliza para intentar ejecutar un comando del sistema desde el propio editor. En este caso, el objetivo es lanzar una shell Bash para escapar del entorno restringido. Esta técnica es habitual en escenarios con <span class="kbd">rbash</span>, ya que algunos programas permitidos pueden servir como puente hacia una shell más funcional.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Restauración del entorno y acceso root</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/16.png" alt="Restauración de variables de entorno y obtención de una shell como root">
+    <figcaption class="single-figure-caption">Restauración de variables de entorno y obtención de una shell como root.</figcaption>
+  </figure>
+
+  <p>En este punto ya se observa una shell funcional, desde la cual se ejecutan <span class="kbd">export SHELL=/bin/bash</span> y <span class="kbd">export PATH=/usr/bin:/bin:$PATH</span>. El primer comando define Bash como shell por defecto y el segundo amplía la variable de entorno <span class="kbd">PATH</span> para que el sistema pueda localizar binarios estándar como <span class="kbd">sudo</span> o <span class="kbd">su</span>. Después se lanza <span class="kbd">sudo su</span>, que permite cambiar al usuario root usando privilegios elevados. El cambio de prompt a <span class="kbd">root@porteus</span> confirma que la escalada de privilegios se ha completado con éxito.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Lectura de la flag final</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/matrix/17.png" alt="Lectura de la flag final tras obtener acceso root al sistema">
+    <figcaption class="single-figure-caption">Lectura de la flag final tras obtener acceso root al sistema.</figcaption>
+  </figure>
+
+  <p>En esta última captura, ya con privilegios de administrador, se ejecuta <span class="kbd">ls</span> para listar el contenido accesible y confirmar la presencia de <span class="kbd">flag.txt</span>, después <span class="kbd">cd /root</span> para situarse en el directorio del superusuario y finalmente <span class="kbd">cat flag.txt</span> para mostrar el contenido de la flag. El comando <span class="kbd">cat</span> se utiliza para imprimir por pantalla el contenido de un archivo de texto. Con ello se completa el objetivo del reto, demostrando acceso total al sistema y recuperación de la flag final.</p>
+
+  <div class="info-box">
+    <p class="note-title">Conclusión</p>
+    <p>En conclusión, este laboratorio muestra de forma muy clara cómo una cadena de fallos aparentemente simples puede llevar a un compromiso total del sistema. A partir de una enumeración básica de red, se identifican servicios expuestos, se analiza el contenido web en busca de pistas y se aprovechan credenciales débiles para obtener acceso inicial. A partir de ahí, el uso de herramientas conocidas y técnicas clásicas, como la evasión de una shell restringida y la manipulación de variables de entorno, permite escalar privilegios hasta root. En definitiva, se trata de un ejemplo muy didáctico de cómo la metodología, la observación y el conocimiento de herramientas básicas pueden marcar la diferencia en un proceso de explotación.</p>
+  </div>
+</section>
+
+<section class="content-section theme-dobby" id="dobby">
+  
+
+  <div class="section-cover">
+    <img src="../img/ciber/dobby/46.png" alt="Cabecera del laboratorio Dobby">
+  </div>
+
+  <h2>Dobby</h2>
+  <p class="lead">Resolución completa del laboratorio Dobby, desde la configuración del entorno hasta la obtención de privilegios de administrador.</p>
+
+  <table class="lab-specs-table">
+    <thead>
+      <tr>
+        <th>Ficha Técnica</th>
+        <th>Detalles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="spec-label">Dificultad</td>
+        <td>Fácil / Media</td>
+      </tr>
+      <tr>
+        <td class="spec-label">SO Objetivo</td>
+        <td>Linux (Ubuntu)</td>
+      </tr>
+      <tr>
+        <td class="spec-label">Servicios Web</td>
+        <td>Apache (Puerto 80), WordPress (/DiagonAlley)</td>
+      </tr>
+      <tr>
+        <td class="spec-label">Técnicas Clave</td>
+        <td>Enumeración Web (Gobuster/WPScan), Decodificación Base64, Explotación de WordPress, Escalada SUID (Find).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>En este laboratorio se trabaja tanto la parte web como la parte interna del sistema, viendo cómo pequeñas pistas pueden acabar llevando a un compromiso completo. Primero se hará reconocimiento de red y enumeración web para localizar rutas ocultas, mensajes codificados y credenciales reutilizables. Después se aprovechará el acceso conseguido en WordPress para avanzar hacia la máquina y obtener una shell funcional. A partir de ahí, la práctica continúa con enumeración local y una escalada de privilegios sencilla, pero muy útil para aprender a detectar configuraciones inseguras.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Configuración de red en VirtualBox</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/1.png" alt="Configuración de red en modo Adaptador sólo anfitrión para el laboratorio Dobby">
+    <figcaption class="single-figure-caption">Configuración de red en modo "Adaptador sólo anfitrión", elegida para este laboratorio pese a disponer ya de una red interna creada.</figcaption>
+  </figure>
+
+  <p>Para este laboratorio, aunque ya existía una red interna específica para prácticas, se optó por utilizar la opción <span class="kbd">Adaptador sólo anfitrión</span> en VirtualBox. Esta configuración también permite la comunicación entre la máquina atacante y la máquina vulnerable dentro de un entorno controlado, por lo que resultaba válida para realizar la práctica sin necesidad de modificar la red ya disponible. De este modo, se trabaja con una conexión funcional y aislada, manteniendo la comodidad de una configuración que ya se había usado en otros laboratorios.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Enumeración inicial de red</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/2.png" alt="Enumeración inicial de red con ip a, arp-scan y nmap en Dobby">
+    <figcaption class="single-figure-caption">Enumeración inicial de red y detección de la máquina objetivo mediante "arp-scan" y "nmap".</figcaption>
+  </figure>
+
+  <p>En esta fase se identifica la configuración de red de la máquina atacante y se comprueba la conectividad dentro del laboratorio. Con el comando <span class="kbd">ip a</span> se visualizan las interfaces y se confirma que Kali tiene asignada la dirección <span class="kbd">192.168.56.102</span> en la red host-only. Después, con <span class="kbd">sudo arp-scan -l</span> se realiza un descubrimiento de hosts en la subred local, detectando varias direcciones activas. Por último, con <span class="kbd">nmap -sC -sV</span> se analizan los hosts encontrados para identificar servicios y versiones. El resultado permite distinguir que la máquina objetivo es <span class="kbd">192.168.56.101</span>, ya que expone un servicio HTTP sobre Apache en el puerto <span class="kbd">80</span>.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Decodificación de una pista en Base64</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/3.png" alt="Decodificación de una cadena Base64 en el laboratorio Dobby">
+    <figcaption class="single-figure-caption">Decodificación de una cadena Base64 para extraer una pista oculta del servicio web.</figcaption>
+  </figure>
+
+  <p>Es el momento de analizar una pista obtenida durante la enumeración web. Mediante el comando <span class="kbd">echo 'dG9vIGVhc3kgbm8/IFBvdHRlcg==' | base64 -d</span> se decodifica una cadena en Base64 incluida en el título HTTP detectado previamente. El resultado es el texto <span class="kbd">too easy no? Potter</span>, que confirma que la máquina contiene pistas temáticas relacionadas con el laboratorio. Este tipo de comprobación resulta útil para transformar información aparentemente opaca en indicios aprovechables para las siguientes fases.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Descubrimiento de rutas ocultas con Gobuster</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/4.png" alt="Enumeración de contenido web con Gobuster en Dobby">
+    <figcaption class="single-figure-caption">Descubrimiento de rutas ocultas en el servidor web mediante "gobuster".</figcaption>
+  </figure>
+
+  <p>Aquí se realiza enumeración de contenido web con el comando <span class="kbd">gobuster dir -u http://192.168.56.101 -w /usr/share/wordlists/dirb/common.txt -x php,txt,html</span>. Esta herramienta fuerza rutas y ficheros comunes para descubrir recursos no visibles desde la página principal. Como resultado se identifican, entre otras, las rutas <span class="kbd">/log</span> y <span class="kbd">phpinfo.php</span>, ambas accesibles con código de estado <span class="kbd">200</span>. El hallazgo de <span class="kbd">/log</span> resulta especialmente relevante, ya que apunta a la existencia de información sensible expuesta en el servidor web.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Obtención de una posible contraseña</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/5.png" alt="Decodificación de la cadena encontrada en la ruta log">
+    <figcaption class="single-figure-caption">Decodificación de la cadena encontrada en "/log" y obtención de una posible contraseña reutilizable.</figcaption>
+  </figure>
+
+  <p>Se completa el análisis de la información expuesta en la ruta <span class="kbd">/log</span>. Mediante el comando <span class="kbd">echo 'OjppbGlrZXNvY2tz' | base64 -d</span> se decodifica la cadena obtenida previamente, revelando el valor <span class="kbd">::ilikesocks</span>. De este resultado se extrae como dato útil la posible contraseña <span class="kbd">ilikesocks</span>, que se interpreta como una credencial reutilizable dentro del laboratorio. Este paso demuestra cómo una mala gestión de información sensible en recursos web accesibles puede derivar en la exposición de credenciales válidas o de pistas clave para continuar con la intrusión.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Acceso al WordPress oculto en DiagonAlley</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/6.png" alt="Acceso a la instancia WordPress ubicada en DiagonAlley">
+    <figcaption class="single-figure-caption">Acceso a la instancia WordPress localizada en "/DiagonAlley" y reconocimiento visual del sitio objetivo.</figcaption>
+  </figure>
+
+  <p>En esta fase se accede a la ruta <span class="kbd">/DiagonAlley</span>, identificada previamente como recurso de interés. La página corresponde a un sitio WordPress con apariencia de blog, denominado <span class="kbd">Daily Prophet</span>, y muestra varias entradas publicadas por el usuario <span class="kbd">Draco</span>. La visualización del portal confirma que la aplicación web no era un simple recurso oculto, sino una instancia funcional de WordPress que puede ser objeto de enumeración y ataque. Además, la entrada titulada <span class="kbd">DOBBY</span> contiene un texto anómalo que sugiere la presencia de mensajes codificados o pistas adicionales dentro del contenido del sitio.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Revisión manual de la entrada DOBBY</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/7.png" alt="Revisión manual de la entrada DOBBY en el WordPress">
+    <figcaption class="single-figure-caption">Revisión manual de la entrada “DOBBY” para identificar posibles pistas ocultas dentro del contenido del WordPress.</figcaption>
+  </figure>
+
+  <p>Se profundiza en el contenido de la entrada <span class="kbd">DOBBY</span> del blog WordPress. La URL mostrada confirma que se trata de una entrada individual dentro de la aplicación, y en la parte inferior se observa el formulario de comentarios del sistema. Este acceso permite verificar la estructura de las publicaciones, la plantilla empleada y la posible interacción con componentes propios de WordPress. La revisión manual de entradas concretas resulta útil para localizar pistas, cadenas codificadas, nombres de usuario o patrones temáticos que puedan ayudar en la obtención posterior de credenciales.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Validación del usuario draco en el login</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/8.png" alt="Formulario de acceso de WordPress mostrando que el usuario draco existe">
+    <figcaption class="single-figure-caption">Comprobación del formulario de acceso de WordPress y validación de la existencia del usuario "draco".</figcaption>
+  </figure>
+
+  <p>Se muestra el acceso al panel de autenticación de WordPress mediante la ruta <span class="kbd">wp-login.php</span>. Se observa un intento fallido de inicio de sesión con el usuario <span class="kbd">draco</span>, y el mensaje de error indica que el nombre de usuario es válido pero que la contraseña introducida no es correcta. Este comportamiento es relevante desde el punto de vista de seguridad, ya que permite confirmar la existencia del usuario sin necesidad de autenticarse. La enumeración de usuarios a través de mensajes de error del formulario de login constituye una debilidad común en aplicaciones mal configuradas.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Credenciales válidas encontradas con WPScan</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/9.png" alt="Uso de WPScan para identificar credenciales válidas del usuario draco">
+    <figcaption class="single-figure-caption">Uso de "wpscan" para enumerar el WordPress y localizar credenciales válidas del usuario "draco".</figcaption>
+  </figure>
+
+  <p>Se utiliza la herramienta <span class="kbd">wpscan</span> para realizar enumeración específica sobre la instalación WordPress y probar credenciales contra el usuario identificado. La salida de la herramienta confirma primero el tema activo del sitio, denominado <span class="kbd">amphibious</span>, y posteriormente muestra el hallazgo de una combinación válida: usuario <span class="kbd">draco</span> y contraseña <span class="kbd">slytherin</span>. Este resultado permite obtener acceso autenticado al panel de administración del WordPress. La captura refleja cómo la combinación de enumeración previa y ataque de diccionario puede derivar en la obtención de credenciales válidas en entornos con contraseñas débiles.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Pista oculta en el código fuente</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/10.png" alt="Inspección del código fuente y hallazgo de la ruta alohomora">
+    <figcaption class="single-figure-caption">Inspección del código fuente de la página principal y localización de la pista oculta hacia la ruta "/alohomora".</figcaption>
+  </figure>
+
+  <p>Se observa una vía alternativa para localizar la siguiente pista del laboratorio mediante inspección manual del código fuente de la página principal. Al abrir las herramientas del navegador se aprecia, dentro del HTML, un comentario oculto con el texto <span class="kbd">See: /alohomora</span>. Este hallazgo demuestra que la página visible no contenía toda la información relevante y que parte de las pistas estaban embebidas en comentarios del código. La revisión del HTML constituye una técnica básica de enumeración web, especialmente útil cuando la aplicación muestra contenido por defecto o aparentemente inocuo.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Pista directa para deducir la contraseña</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/11.png" alt="Acceso a la ruta alohomora con la pista sobre la contraseña de draco">
+    <figcaption class="single-figure-caption">Acceso a la ruta "/alohomora" y obtención de una pista directa para deducir la contraseña del usuario "draco".</figcaption>
+  </figure>
+
+  <p>Se accede directamente a la ruta <span class="kbd">/alohomora</span> descubierta en el código fuente. La página muestra el mensaje <span class="kbd">Draco's password is his house ;)</span>, que proporciona una pista lógica para deducir la contraseña del usuario <span class="kbd">draco</span> sin necesidad de recurrir a fuerza bruta. De este modo, el laboratorio ofrece una segunda vía de resolución basada en enumeración manual e interpretación de pistas. Esta alternativa resulta especialmente interesante desde el punto de vista didáctico, ya que refleja cómo una mala práctica en el desarrollo web puede exponer información sensible mediante comentarios HTML o rutas no enlazadas.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Acceso al editor de temas de WordPress</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/12.png" alt="Acceso al editor de temas de WordPress y al archivo 404.php">
+    <figcaption class="single-figure-caption">Acceso al editor de temas de WordPress y localización del archivo "404.php" del tema activo.</figcaption>
+  </figure>
+
+  <p>Una vez se accede con las credenciales correctas, el siguiente paso es entrar en el editor de temas del panel de administración de WordPress. En concreto, se visualiza el archivo <span class="kbd">404.php</span> del tema activo <span class="kbd">Amphibious</span>, lo que confirma que el usuario comprometido dispone de permisos suficientes para modificar archivos del tema desde la propia interfaz web. Este punto es importante porque demuestra que el compromiso del panel no solo permite administrar contenidos, sino también interactuar con elementos internos de la plantilla. La presencia del botón <span class="kbd">Actualizar archivo</span> indica además que el fichero puede editarse directamente desde el backend.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Preparación de un fragmento PHP externo</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/13.png" alt="Preparación de un fragmento PHP externo para el laboratorio">
+    <figcaption class="single-figure-caption">Preparación de un fragmento PHP externo como parte del flujo de trabajo del laboratorio.</figcaption>
+  </figure>
+
+  <p>Es el momento de preparar un código PHP generado externamente para ser utilizado dentro del laboratorio. La página mostrada corresponde a un generador de fragmentos PHP, donde se configuran una dirección IP y un puerto de escucha asociados a la máquina atacante. Desde el punto de vista metodológico, esta fase refleja la preparación previa de un recurso que posteriormente se intentaría insertar en un archivo editable del tema de WordPress. En la memoria conviene destacar este paso como parte del proceso de preparación del entorno de práctica, sin entrar en los detalles concretos del contenido generado.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Listener preparado en Kali</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/14.png" alt="Realización de una escucha con netcat en Kali">
+    <figcaption class="single-figure-caption">Realización de escucha.</figcaption>
+  </figure>
+
+  <p>Una vez insertado el código, desde la terminal de Kali, y mediante el comando <span class="kbd">nc -lvnp 4444</span>, se realiza una escucha para recibir una posible conexión entrante desde la máquina objetivo. Este paso forma parte de la preparación del entorno atacante y resulta necesario antes de intentar activar el archivo modificado desde la aplicación web.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Comprobación de acceso directo al 404.php</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/15.png" alt="Verificación del acceso directo al archivo 404.php del tema">
+    <figcaption class="single-figure-caption">Verificación del acceso directo a "404.php" y respuesta 404 del servidor Apache.</figcaption>
+  </figure>
+
+  <p>Para activar la escucha, se accede a la dirección <span class="kbd">http://192.168.56.101/DiagonAlley/wp-content/themes/amphibious/404.php</span>, ya que apunta al archivo de plantilla de error 404 del tema activo. En esta fase se comprueba el comportamiento del servidor al acceder directamente a la ruta del archivo <span class="kbd">404.php</span> dentro del directorio del tema. La respuesta devuelta por Apache es un error <span class="kbd">Not Found</span>, lo que indica que el archivo no puede ejecutarse simplemente accediendo a su ruta física desde el navegador.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Recepción de acceso inicial como www-data</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/16.png" alt="Recepción de una conexión remota en Kali como www-data">
+    <figcaption class="single-figure-caption">Recepción de una conexión remota en Kali y obtención de acceso inicial con el usuario "www-data".</figcaption>
+  </figure>
+
+  <p>Aquí se observa la terminal de Kali a la espera de conexiones mediante el comando <span class="kbd">nc -lvnp 4444</span>. La consola muestra que se ha establecido una conexión entrante desde la máquina objetivo <span class="kbd">192.168.56.101</span> y que el proceso remoto se ejecuta con el usuario <span class="kbd">www-data</span>, propio del servicio web Apache. De esta forma se abre la puerta a la fase posterior de enumeración local y escalada de privilegios. También se identifica el entorno del sistema remoto, confirmando que se trata de una máquina Linux basada en Ubuntu.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Cambio al usuario dobby y mejora de la shell</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/17.png" alt="Cambio al usuario dobby y mejora de la shell interactiva">
+    <figcaption class="single-figure-caption">Cambio al usuario "dobby" y mejora de la shell para facilitar la interacción con el sistema comprometido.</figcaption>
+  </figure>
+
+  <p>En esta fase ya se ve que, después de entrar con el usuario del servicio web, se consigue pasar al usuario <span class="kbd">dobby</span> usando la contraseña <span class="kbd">ilikesocks</span>, que se había obtenido antes durante la enumeración. También se ejecutan los comandos <span class="kbd">python3 -c 'import pty; pty.spawn("/bin/bash")'</span> y <span class="kbd">export TERM=xterm</span> para que la terminal funcione de una forma más cómoda y estable. Esto permite escribir y ejecutar comandos con menos problemas, algo importante antes de seguir investigando el sistema. En resumen, aquí se consigue un acceso más limpio y útil dentro de la máquina.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Búsqueda de binarios con permisos especiales</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/18.png" alt="Búsqueda de binarios con permisos especiales para escalada">
+    <figcaption class="single-figure-caption">Búsqueda de binarios con permisos especiales para localizar una posible vía de escalada de privilegios.</figcaption>
+  </figure>
+
+  <p>Se lanza el comando <span class="kbd">find / -perm -4000 -type f 2>/dev/null</span> para buscar programas del sistema que tengan permisos especiales. La idea de este paso es revisar si hay algún binario mal configurado que pueda aprovecharse para subir de privilegios. Entre los resultados aparecen varios archivos interesantes, y destacan especialmente <span class="kbd">base32</span> y <span class="kbd">find</span>, que llaman la atención porque no suelen ser los más comunes en este tipo de búsquedas. Esta comprobación sirve para localizar posibles caminos hacia la cuenta de administrador.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Escalada de privilegios con find</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/19.png" alt="Uso del binario find para obtener acceso como root">
+    <figcaption class="single-figure-caption">Uso del binario "find" para obtener acceso como "root" dentro del sistema.</figcaption>
+  </figure>
+
+  <p>En esta fase se prueba uno de los binarios encontrados, en concreto <span class="kbd">find</span>, con el comando <span class="kbd">find . -exec /bin/sh -p \; -quit</span>. Después se comprueba el resultado con <span class="kbd">whoami</span> e <span class="kbd">id</span>, y se confirma que ya se ha conseguido acceso como <span class="kbd">root</span>. Así, se ha pasado de un usuario normal a tener control total sobre la máquina. Se trata del momento clave de la escalada de privilegios dentro del laboratorio.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Lectura de la prueba final del laboratorio</h3>
+    <img class="single-figure-image clickable-image" src="../img/ciber/dobby/20.png" alt="Acceso al directorio root y lectura del archivo proof.txt">
+    <figcaption class="single-figure-caption">Acceso al directorio de "root" y lectura del archivo final "proof.txt" como prueba de resolución del laboratorio.</figcaption>
+  </figure>
+
+  <p>Una vez conseguido el acceso como <span class="kbd">root</span>, se entra en el directorio del administrador con <span class="kbd">cd /root</span> y se revisa su contenido usando <span class="kbd">ls -lah</span>. Allí aparece el archivo <span class="kbd">proof.txt</span>, que actúa como prueba final de que la máquina ha sido comprometida completamente. Aunque el comando <span class="kbd">cat</span> da problemas en esa terminal, el contenido se consigue leer con <span class="kbd">more proof.txt</span>, mostrando el mensaje final del laboratorio. Con esto se confirma que el ejercicio ha sido resuelto correctamente de principio a fin.</p>
+</section>
+
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><div class="container" style="text-align: center;">
+  &copy; 2026 Joaquín L. García García · <a href="https://github.com/Joaquin7gg" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">GitHub</a>
+</div></footer>
+  <div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img" alt="">
+</div>
+<script>
+window.addEventListener("load", function () {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = document.getElementById("lightbox-close");
+
+  if (!lightbox || !lightboxImg || !closeBtn) return;
+
+  const images = document.querySelectorAll("main img.clickable-image");
+
+  images.forEach((img) => {
+    if (img.closest(".section-cover")) return;
+
+    img.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      lightboxImg.src = this.src;
+      lightboxImg.alt = this.alt || "";
+      lightbox.classList.add("show");
+    });
+  });
+
+  closeBtn.addEventListener("click", function () {
+    lightbox.classList.remove("show");
+  });
+
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) {
+      lightbox.classList.remove("show");
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      lightbox.classList.remove("show");
+    }
+  });
+});
+</script>
+</body>
+</html>

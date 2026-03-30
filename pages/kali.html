@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuración de máquina Kali Linux | Manual de Hardware</title>
+  <meta name="description" content="Instalación y verificación de Kali Linux en un entorno de prácticas o laboratorio.">
+  <link rel="icon" type="image/png" href="../img/1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="../index.html">
+        <span class="brand-badge">HW</span>
+        <span>Manual de Hardware y Ciberseguridad</span>
+      </a>
+<nav class="nav-links">
+  <a href="../index.html">Inicio</a>
+  <a href="configuracion.html">Configuración</a>
+  <a href="montaje.html">Montaje</a>
+  <a href="herramientas.html">Herramientas</a>
+  <a href="analisis.html">Análisis</a>
+  <a href="benchmarks.html">Benchmarks</a>
+  <a href="uefi.html">UEFI</a>
+  <a class="active" href="kali.html">Kali</a>
+  <a href="lab-seguro.html">Lab Ético</a>
+  <a href="ciber-labs.html">CiberLabs</a>
+  <a href="sobre-mi.html">Sobre mí</a>
+</nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumbs">
+          <a href="../index.html">Inicio</a>
+          <span>›</span>
+          <span>Configuración de máquina Kali Linux</span>
+        </div>
+        
+        <h1>Configuración de máquina Kali Linux</h1>
+        <p>En esta sección se muestra una instalación funcional de Kali Linux en un entorno de prácticas, desde el arranque inicial hasta la comprobación final del sistema instalado en modo UEFI. Además, se incluyen varias prácticas guiadas para empezar a trabajar con herramientas y técnicas básicas dentro de Kali.</p>
+      </div>
+    </section>
+
+    <div class="container page-layout">
+      <aside class="toc">
+        <h3>En esta página</h3>
+        <ul>
+          <li><a href="#kali">Configuración de Kali Linux</a></li>
+          <li><a href="#practicas-kali">Prácticas guiadas con Kali</a></li>
+          <li><a href="#backup-linux">Copia de seguridad local automatizada</a></li>
+          <li><a href="#nmap-servicio">Abrir un servicio y descubrirlo con Nmap</a></li>
+          <li><a href="#wireshark-ftp">Ver contraseñas en texto plano con Wireshark</a></li>
+          <li><a href="#cracking">Cracking de contraseñas</a></li>
+        </ul>
+      </aside>
+
+      <div class="content">
+        <section class="content-section" id="kali">
+          
+          <div class="section-title-with-logo">
+            <h2>Configuración de máquina Kali Linux</h2>
+            <img src="../img/kali/4.png" alt="Logo de Kali Linux" class="section-logo">
+          </div>
+
+          <p class="lead">A continuación se muestran varias capturas del proceso de instalación de Kali Linux y de la comprobación final del sistema, confirmando que se ha instalado correctamente en un entorno preparado para arranque UEFI.</p>
+
+          <div class="software-sequence" style="margin-top: 1.4rem;">
+            <article class="software-shot">
+              <h3>Inicio del proceso de instalación</h3>
+              <p>En la primera imagen se puede ver el momento previo a la instalación de Kali. Desde aquí se selecciona el arranque del instalador y se inicia el proceso para desplegar el sistema operativo dentro de la máquina virtual o del entorno configurado.</p>
+              <img src="../img/kali/1.png" alt="Primera captura antes de instalar Kali Linux" class="software-image">
+            </article>
+
+            <article class="software-shot">
+              <h3>Instalación completada</h3>
+              <p>Aquí se muestra el instante en el que la instalación ha finalizado correctamente, dejando el sistema listo para reiniciar y arrancar ya desde el disco configurado.</p>
+              <img src="../img/kali/2.png" alt="Instalación completa de Kali Linux" class="software-image">
+            </article>
+
+            <article class="software-shot">
+              <h3>Comprobación del arranque en modo UEFI</h3>
+              <p>En este punto, usando el comando <span class="kbd">ls /sys/firmware/efi</span>, se confirma que Kali se ha instalado correctamente en <strong>modo UEFI</strong>. Esta verificación resulta útil porque demuestra que el sistema reconoce el entorno de arranque moderno y que la instalación se ha realizado de forma coherente con la configuración de la máquina.</p>
+              <img src="../img/kali/3.png" alt="Verificación de Kali Linux instalado en modo UEFI" class="software-image">
+            </article>
+          </div>
+
+          <div class="info-box" style="margin-top: 1.2rem;">
+            <p class="note-title">Resultado</p>
+            <p>Con estas capturas queda documentado un proceso de instalación correcto de Kali Linux, que termina con la comprobación de que el sistema funciona y arranca en modo UEFI, algo especialmente útil en entornos de prácticas y laboratorio.</p>
+          </div>
+        </section>
+
+        <section class="content-section" id="practicas-kali">
+          
+          <h2>Prácticas guiadas con Kali Linux</h2>
+          <p class="lead">Una vez instalado y comprobado el sistema, esta parte reúne varios ejercicios sencillos para empezar a utilizar Kali Linux en un entorno controlado, de forma que sirvan como base antes de pasar a escenarios más completos.</p>
+        </section>
+
+        <section class="content-section" id="backup-linux">
+  
+  <h2>Creación y automatización de una copia de seguridad local en Linux</h2>
+  <p class="lead">Práctica guiada orientada a crear una copia de seguridad local sencilla en Linux y dejarla automatizada para que se ejecute de forma periódica sin intervención manual.</p>
+
+  <p>En esta práctica se aborda la creación y automatización de una copia de seguridad local en un sistema Linux, trabajando con el usuario <span class="kbd">joaquin</span> dentro de Kali Linux. El objetivo principal ha sido aprender a proteger información básica de forma sencilla, utilizando herramientas nativas del sistema como <span class="kbd">mkdir</span>, <span class="kbd">rsync</span>, <span class="kbd">nano</span>, <span class="kbd">chmod</span> y <span class="kbd">cron</span>. Para ello, primero se crea una carpeta de destino donde almacenar la copia, después se genera un script en Bash que automatiza el proceso de respaldo y, por último, se programa su ejecución automática mediante <span class="kbd">crontab</span>. Este tipo de procedimiento resulta muy útil porque permite hacer copias de seguridad periódicas sin depender de intervención manual, reduciendo errores y ahorrando tiempo. Además, sirve como base para comprender cómo funcionan las tareas automatizadas en Linux y cómo se puede mejorar la seguridad y disponibilidad de los archivos personales.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Creación inicial de la carpeta de respaldo</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/script/1.png" alt="Creación de la carpeta de backup y primera prueba con rsync">
+    <figcaption class="single-figure-caption">Creación de la carpeta de backup y primera prueba de copia con rsync.</figcaption>
+  </figure>
+
+  <p>En este paso se crea la carpeta donde se guardará la copia con el comando <span class="kbd">mkdir -p /home/joaquin/backups</span>, que sirve para generar el directorio aunque todavía no exista. A continuación se ejecuta <span class="kbd">rsync -av /home/joaquin/Documentos/ /home/joaquin/backups/Documentos/</span>, que copia el contenido de la carpeta Documentos al directorio de respaldo. La opción <span class="kbd">-a</span> conserva estructura, permisos y fechas, mientras que <span class="kbd">-v</span> muestra información detallada del proceso. El sistema indica que se ha creado <span class="kbd">/home/joaquin/backups/Documentos</span>. También se observa <span class="kbd">total size is 0</span>, lo que significa que la carpeta de origen estaba vacía en ese momento.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Creación del archivo backup.sh</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/script/2.png" alt="Apertura del archivo backup.sh con Nano">
+    <figcaption class="single-figure-caption">Apertura del archivo "backup.sh" con Nano para comenzar a escribir el script de copia de seguridad.</figcaption>
+  </figure>
+
+  <p>En este momento se utiliza el comando <span class="kbd">nano /home/joaquin/backup.sh</span>, que sirve para abrir el editor de texto Nano y crear o modificar el archivo <span class="kbd">backup.sh</span>. Este archivo contendrá las instrucciones necesarias para automatizar la copia de seguridad. Al guardarlo dentro de la carpeta personal del usuario <span class="kbd">joaquin</span>, se evita trabajar en rutas con posibles problemas de permisos. Este paso es importante porque permite pasar de comandos escritos manualmente a un script reutilizable. A continuación, dentro de Nano, se introducirán las órdenes necesarias para crear la carpeta de backup y ejecutar la copia con <span class="kbd">rsync</span>.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Escritura del contenido del script</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/script/3.png" alt="Escritura del contenido del script backup.sh en Nano">
+    <figcaption class="single-figure-caption">Escritura del contenido del script "backup.sh" dentro del editor Nano.</figcaption>
+  </figure>
+
+  <p>Aquí ya se ha abierto el editor con <span class="kbd">nano /home/joaquin/backup.sh</span> y se está escribiendo el contenido del script. La primera línea, <span class="kbd">#!/bin/bash</span>, indica que el archivo se ejecutará con el intérprete Bash. Después aparece <span class="kbd">mkdir -p /home/joaquin/backups</span>, que crea la carpeta de destino si no existe. Por último, <span class="kbd">rsync -av /home/joaquin/Documentos/ /home/joaquin/backups/Documentos/</span> copia el contenido de la carpeta Documentos al directorio de respaldo. Este paso es importante porque deja preparada la automatización en un único archivo ejecutable.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Permiso de ejecución y primera prueba</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/script/4.png" alt="Permiso de ejecución del script y prueba inicial">
+    <figcaption class="single-figure-caption">Permiso de ejecución del script y primera prueba de funcionamiento.</figcaption>
+  </figure>
+
+  <p>En esta fase se ejecuta <span class="kbd">chmod +x /home/joaquin/backup.sh</span>, que sirve para dar permiso de ejecución al archivo y convertirlo en un script ejecutable. Después se lanza <span class="kbd">/home/joaquin/backup.sh</span>, que ejecuta automáticamente los comandos escritos en el fichero. El sistema vuelve a mostrar la salida de <span class="kbd">rsync</span>, señal de que el script ha funcionado. Como sigue apareciendo <span class="kbd">total size is 0</span>, se confirma que el origen aún no contenía archivos para copiar. Aun así, esta prueba demuestra que el script estaba bien creado y era funcional.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Prueba real del backup con un archivo</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/script/5.png" alt="Comprobación práctica del backup mediante un archivo de prueba">
+    <figcaption class="single-figure-caption">Comprobación práctica del backup mediante la creación y copia de un archivo de prueba.</figcaption>
+  </figure>
+
+  <p>Primero se consulta el contenido del directorio de backup con <span class="kbd">ls /home/joaquin/backups</span> y <span class="kbd">ls /home/joaquin/backups/Documentos</span>, donde se comprueba que la carpeta existe pero está vacía. Después se crea un archivo real con <span class="kbd">echo 'prueba backup' &gt; /home/joaquin/Documentos/prueba.txt</span>, comando que escribe el texto indicado dentro de <span class="kbd">prueba.txt</span>. A continuación se vuelve a ejecutar <span class="kbd">/home/joaquin/backup.sh</span> para repetir la copia. Esta vez <span class="kbd">rsync</span> detecta y copia el archivo nuevo. Finalmente, con <span class="kbd">ls /home/joaquin/backups/Documentos</span> se comprueba que <span class="kbd">prueba.txt</span> ya está en la copia de seguridad.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Programación del script con crontab</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/script/6.png" alt="Edición de crontab para programar la ejecución automática del script">
+    <figcaption class="single-figure-caption">Edición de crontab para programar la ejecución automática del script de backup.</figcaption>
+  </figure>
+
+  <p>En esta parte se abre el archivo de tareas programadas del usuario con <span class="kbd">crontab -e</span>, que sirve para editar el cron personal. Dentro de este archivo se añade la línea <span class="kbd">0 2 * * * /home/joaquin/backup.sh &gt;&gt; /home/joaquin/backups/backup.log 2&gt;&amp;1</span>, que programa la ejecución automática del script todos los días a las 02:00. La parte <span class="kbd">&gt;&gt; /home/joaquin/backups/backup.log</span> guarda la salida del proceso en un archivo de log. La expresión <span class="kbd">2&gt;&amp;1</span> redirige también los posibles errores al mismo archivo, para que toda la información quede registrada. Este paso permite automatizar la copia de seguridad sin necesidad de lanzarla manualmente cada día.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Confirmación de instalación del cron</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/script/7.png" alt="Confirmación de que la nueva tarea de cron se ha instalado correctamente">
+    <figcaption class="single-figure-caption">Confirmación de que la nueva tarea de cron se ha guardado e instalado correctamente.</figcaption>
+  </figure>
+
+  <p>Aquí se observa el mensaje generado después de guardar el archivo editado con <span class="kbd">crontab -e</span>. El texto <span class="kbd">crontab: installing new crontab</span> confirma que la nueva programación se ha instalado correctamente en el sistema. Esto significa que cron ya reconoce la tarea y la ejecutará en la hora indicada. Es un paso importante porque valida que la configuración no tiene errores de formato y que ha quedado registrada para el usuario <span class="kbd">joaquin</span>. A partir de este momento, el script ya puede ejecutarse de forma automática.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Revisión del contenido de crontab</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/script/8.png" alt="Comprobación del contenido de crontab para verificar la tarea programada">
+    <figcaption class="single-figure-caption">Comprobación del contenido de crontab para verificar la tarea programada.</figcaption>
+  </figure>
+
+  <p>En esta imagen se utiliza el comando <span class="kbd">crontab -l</span>, que sirve para mostrar en pantalla las tareas programadas activas del usuario. Gracias a esta comprobación se puede revisar que la línea del cron se ha guardado bien y que apunta al script correcto, <span class="kbd">/home/joaquin/backup.sh</span>. También se verifica que la salida se redirige al archivo <span class="kbd">/home/joaquin/backups/backup.log</span>. Este paso resulta útil para confirmar la configuración sin necesidad de volver a abrir el editor. Así se comprueba que la automatización ha quedado definida correctamente antes de hacer la prueba de ejecución.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Verificación final del log y del backup</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/script/9.png" alt="Verificación final del log y de la copia de seguridad automática">
+    <figcaption class="single-figure-caption">Verificación final del log y de la copia de seguridad realizada automáticamente por cron.</figcaption>
+  </figure>
+
+  <p>Para terminar, se consulta primero el archivo de registro con <span class="kbd">cat /home/joaquin/backups/backup.log</span>, comando que muestra el contenido completo del log generado por la ejecución automática del script. La salida confirma que <span class="kbd">rsync</span> se ha ejecutado, ya que aparece la información de transferencia del archivo. Después se usa <span class="kbd">ls /home/joaquin/backups/Documentos</span>, que sirve para listar el contenido de la carpeta de respaldo. En el resultado aparece <span class="kbd">prueba.txt</span>, lo que demuestra que el archivo de prueba se ha copiado correctamente mediante la tarea programada. Esta es la validación final de que tanto el script como el cron funcionan bien.</p>
+
+  <div class="info-box">
+    <p class="note-title">Conclusión</p>
+    <p>Como conclusión, esta práctica ha permitido comprobar de forma real cómo crear un sistema básico de backup automatizado en Linux. A través del uso de <span class="kbd">rsync</span> se ha conseguido copiar el contenido de una carpeta a otra ubicación, mientras que con un script en Bash se ha simplificado la tarea para poder reutilizarla fácilmente. Finalmente, gracias a <span class="kbd">cron</span>, el proceso ha quedado programado para ejecutarse de forma automática a una hora determinada. Este tipo de solución resulta muy útil para mantener copias de seguridad actualizadas de documentos importantes, configuraciones o archivos de trabajo. Aunque en este caso se ha realizado en una carpeta local, el mismo procedimiento puede ampliarse más adelante a discos externos, otros equipos en red o sistemas de copia más avanzados.</p>
+  </div>
+</section>
+
+<section class="content-section" id="nmap-servicio">
+  
+  <h2>Abrir un servicio y descubrirlo con Nmap</h2>
+  <p class="lead">Práctica guiada centrada en levantar un servicio local, comprobar que está activo y verificar su detección mediante Nmap.</p>
+
+  <p>En esta práctica se muestra un ejemplo sencillo de cómo abrir un servicio en un sistema Linux y comprobar su detección con <span class="kbd">nmap</span>. La idea es ver de forma clara cómo cambia el estado de un puerto cuando un servicio está activo y cómo una herramienta de escaneo permite identificarlo desde la propia máquina. Para ello, primero se arranca el servidor Apache, después se verifica su presencia con un escaneo de versiones y, por último, se detiene para confirmar que deja de aparecer como servicio disponible. Es una práctica muy útil para entender la relación entre procesos, puertos abiertos y herramientas de reconocimiento.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Arranque del servicio Apache</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/nmap/1.png" alt="Arranque del servicio Apache y comprobación de su estado">
+    <figcaption class="single-figure-caption">Inicio del servicio Apache y comprobación de que ha quedado activo.</figcaption>
+  </figure>
+
+  <p>En este paso se abre un servidor Apache utilizando el comando <span class="kbd">sudo systemctl start apache2</span>. Después se comprueba que el servicio está funcionando con <span class="kbd">systemctl status apache2</span>. Este paso permite verificar que Apache se ha arrancado correctamente y que el sistema lo reconoce como un servicio activo antes de realizar cualquier escaneo.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Detección del servicio con Nmap</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/nmap/2.png" alt="Detección de Apache con nmap sobre localhost">
+    <figcaption class="single-figure-caption">Comprobación con Nmap de que el servicio está abierto y funcionando.</figcaption>
+  </figure>
+
+  <p>Después se ejecuta <span class="kbd">nmap -sV localhost</span> para comprobar si Apache está funcionando. La opción <span class="kbd">-sV</span> intenta identificar la versión del servicio detectado, mientras que <span class="kbd">localhost</span> indica que el escaneo se realiza sobre la propia máquina. El resultado muestra el estado <span class="kbd">open</span>, lo que confirma que el puerto asociado al servicio está accesible y que Apache está efectivamente activo.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Detención del servicio y nueva comprobación</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/nmap/3.png" alt="Detención de Apache y comprobación con nmap">
+    <figcaption class="single-figure-caption">Parada del servicio Apache y verificación de que ya no aparece como activo.</figcaption>
+  </figure>
+
+  <p>Para finalizar, se detiene Apache con <span class="kbd">sudo systemctl stop apache2</span> y se vuelve a comprobar el resultado con <span class="kbd">nmap -sV localhost</span>. Esta última comprobación sirve para confirmar que, una vez parado el servicio, el puerto deja de aparecer como abierto o ya no se identifica el servicio correspondiente. Con ello se cierra la práctica mostrando de forma clara cómo Nmap refleja el estado real del sistema según los servicios que estén activos en cada momento.</p>
+
+  <div class="info-box">
+    <p class="note-title">Conclusión</p>
+    <p>Esta práctica permite entender de forma muy visual cómo se relacionan los servicios activos de un sistema con los puertos que aparecen durante un escaneo. Al arrancar Apache, se comprueba que el servicio queda disponible y detectable; al detenerlo, se confirma que deja de estar expuesto. Es un ejemplo muy útil para familiarizarse con <span class="kbd">systemctl</span>, con el funcionamiento básico de <span class="kbd">nmap</span> y con la lógica de la enumeración de servicios en un entorno Linux.</p>
+  </div>
+</section>
+
+        <section class="content-section" id="wireshark-ftp">
+  
+  <h2>Ver contraseñas en texto plano con Wireshark</h2>
+  <p class="lead">Práctica guiada orientada a comprobar cómo un protocolo no cifrado como FTP puede exponer credenciales en la red, y a compararlo con el comportamiento de SSH.</p>
+
+  <p>En esta práctica se realiza una comprobación muy visual de cómo se pueden ver credenciales en texto plano cuando se utiliza un protocolo que no cifra la comunicación. Para ello se trabaja con <span class="kbd">Wireshark</span> como herramienta de captura de tráfico y con <span class="kbd">FTP</span> como servicio de prueba. Después, para comparar, se repite una conexión usando <span class="kbd">SSH</span>, que sí cifra la información. De esta forma se puede observar claramente la diferencia entre un protocolo inseguro y otro diseñado para proteger los datos transmitidos por la red.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Instalación y activación del servicio FTP</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/wire/1.png" alt="Instalación y arranque del servicio vsftpd en Kali Linux">
+    <figcaption class="single-figure-caption">Instalación del servidor FTP y comprobación de que el servicio ha quedado activo.</figcaption>
+  </figure>
+
+  <p>En este laboratorio se realiza una prueba para comprobar cómo pueden verse las credenciales de un usuario a través de Wireshark cuando se utiliza FTP, un protocolo que no cifra la comunicación. Por eso, lo primero que se hace es instalar el servicio con <span class="kbd">sudo apt install vsftpd -y</span> y arrancarlo mediante <span class="kbd">sudo systemctl start vsftpd</span>. Después se comprueba su estado con <span class="kbd">systemctl status vsftpd</span>. Al visualizar el estado <span class="kbd">running</span>, se verifica que el servicio se ha iniciado correctamente.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Creación de un usuario de prueba</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/wire/2.png" alt="Creación del usuario víctima para la práctica con FTP">
+    <figcaption class="single-figure-caption">Creación de un usuario de prueba para realizar la conexión FTP y observar sus credenciales en la red.</figcaption>
+  </figure>
+
+  <p>Para comprobar la exposición de credenciales, se crea un usuario específico de prueba. En este caso se utiliza el nombre <span class="kbd">víctima</span> y se crea con el comando <span class="kbd">sudo adduser víctima</span>. Este paso permite disponer de una cuenta real sobre la que hacer la conexión, de forma que el tráfico capturado por Wireshark sea representativo y se pueda analizar después con claridad.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Conexión por FTP con el usuario creado</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/wire/3.png" alt="Conexión vía FTP con el usuario víctima">
+    <figcaption class="single-figure-caption">Inicio de sesión por FTP con el usuario de prueba creado anteriormente.</figcaption>
+  </figure>
+
+  <p>En esta fase se establece la conexión vía FTP con el usuario que se había creado previamente. Este paso es importante porque genera el tráfico necesario para que Wireshark pueda capturar el intercambio entre cliente y servidor. Como FTP no cifra las credenciales, esta conexión servirá después para comprobar si el nombre de usuario y la contraseña pueden verse directamente dentro de los paquetes.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Captura de la conexión en Wireshark</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/wire/4.png" alt="Captura del tráfico FTP en Wireshark">
+    <figcaption class="single-figure-caption">Visualización en Wireshark de la conexión FTP realizada correctamente.</figcaption>
+  </figure>
+
+  <p>En Wireshark aparece la conexión capturada, lo que confirma que el tráfico generado por la sesión FTP se ha registrado correctamente. Esta fase permite localizar la conversación entre cliente y servidor y preparar el análisis de los paquetes concretos relacionados con la autenticación. Al tratarse de un protocolo sin cifrado, esta revisión tiene especial interés porque la información sensible puede quedar visible tal y como fue enviada.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Visualización de la contraseña en texto plano</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/wire/5.png" alt="Visualización de la contraseña FTP en texto plano en Wireshark">
+    <figcaption class="single-figure-caption">Identificación dentro del tráfico FTP del usuario y la contraseña enviados sin cifrado.</figcaption>
+  </figure>
+
+  <p>Al pulsar sobre el servicio dentro de Wireshark y revisar el contenido del intercambio, se puede ver la contraseña enviada en texto plano. En este caso, la práctica permite observar de forma directa que FTP no protege las credenciales durante la autenticación. Ese es precisamente el objetivo del ejercicio: demostrar por qué no conviene utilizar protocolos inseguros para transmitir información sensible.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Inicio de la comparación con SSH</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/wire/6.png" alt="Conexión SSH con el usuario víctima para comparar con FTP">
+    <figcaption class="single-figure-caption">Activación de la comparación usando SSH como protocolo cifrado.</figcaption>
+  </figure>
+
+  <p>Para comprobar la diferencia con SSH, que sí va cifrado, se repite una prueba similar. En esta fase se activa el servicio correspondiente y se inicia sesión con el usuario <span class="kbd">víctima</span>. La idea es generar tráfico comparable al de FTP, pero usando un protocolo diseñado para proteger la información intercambiada entre cliente y servidor.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Captura del tráfico SSH en Wireshark</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/wire/7.png" alt="Captura del tráfico SSH en Wireshark">
+    <figcaption class="single-figure-caption">Visualización de los paquetes de la sesión SSH dentro de Wireshark.</figcaption>
+  </figure>
+
+  <p>En este punto se ve que los paquetes de la conexión SSH aparecen correctamente en Wireshark, igual que ocurría antes con FTP. Es decir, el tráfico se captura sin problema y puede analizarse desde la herramienta. Sin embargo, la diferencia importante no está en si los paquetes existen o no, sino en el contenido que transportan.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Comprobación de que SSH protege las credenciales</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/wire/8.png" alt="Comprobación de que las credenciales SSH no aparecen en texto plano">
+    <figcaption class="single-figure-caption">Verificación de que en SSH no se muestran las credenciales en texto plano.</figcaption>
+  </figure>
+
+  <p>Finalmente, se comprueba que en la conexión SSH no aparecen los datos de autenticación en texto plano. Aunque la sesión y sus paquetes sean visibles en la captura, la información sensible va cifrada y no puede leerse directamente como ocurría con FTP. Esta comparación deja muy clara la diferencia entre un protocolo inseguro y uno seguro, y refuerza la importancia de utilizar servicios cifrados siempre que se manejen usuarios, contraseñas o cualquier otro dato sensible.</p>
+
+  <div class="warning-box">
+    <p class="note-title">Conclusión</p>
+    <p>Esta práctica permite comprobar de forma muy clara por qué FTP no es adecuado cuando se quiere proteger información sensible. Mientras que en FTP las credenciales pueden aparecer directamente en la captura, en SSH los paquetes siguen existiendo pero su contenido ya no resulta legible porque va cifrado. Es una comparación muy útil para entender la importancia del cifrado en protocolos de red y para ver, de forma práctica, cómo Wireshark puede ayudar a analizar el comportamiento de distintos servicios dentro de un entorno controlado.</p>
+  </div>
+</section>
+
+<section class="content-section" id="cracking">
+  
+  <h2>Cracking de contraseñas</h2>
+  <p class="lead">Práctica guiada orientada a comprobar cómo la baja complejidad de una contraseña facilita su recuperación a partir de un hash usando un ataque de diccionario.</p>
+
+  <p>En esta práctica se realiza una demostración sencilla de cracking de contraseñas a partir de un hash SHA-256 utilizando <span class="kbd">John the Ripper</span>. La idea es mostrar cómo una contraseña débil puede recuperarse si se compara contra un diccionario conocido. Para ello, primero se genera el hash de una contraseña de ejemplo, después se guarda en un archivo de texto y, por último, se utiliza un diccionario popular para intentar resolverlo. Es una práctica muy útil para entender por qué no basta con almacenar contraseñas en forma de hash si además se eligen claves demasiado simples.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Generación del hash SHA-256</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/crack/1.png" alt="Generación de un hash SHA-256 a partir de una contraseña de ejemplo">
+    <figcaption class="single-figure-caption">Creación del hash SHA-256 de una contraseña sencilla para preparar la práctica.</figcaption>
+  </figure>
+
+  <p>En esta práctica se realiza una prueba para recuperar una contraseña mediante un ataque de diccionario sobre un hash SHA-256 con <span class="kbd">John the Ripper</span>, logrando obtenerla debido a su baja complejidad. En esta captura se genera el hash a propósito ejecutando el comando <span class="kbd">echo -n "password123" | sha256sum</span>. La opción <span class="kbd">-n</span> evita añadir un salto de línea al texto, lo que permite obtener el hash exacto de la contraseña sin caracteres extra. Con este paso se prepara la base de la práctica: un hash real sobre el que después se intentará recuperar la clave original.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Guardado del hash en un archivo</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/crack/2.png" alt="Copia del hash generado en un archivo de texto">
+    <figcaption class="single-figure-caption">Copia del hash en un archivo de texto para poder trabajarlo con la herramienta de cracking.</figcaption>
+  </figure>
+
+  <p>Aquí se copia el hash obtenido anteriormente dentro de un archivo <span class="kbd">.txt</span>. Este paso es importante porque herramientas como <span class="kbd">John the Ripper</span> necesitan leer el hash desde un fichero para poder compararlo con las palabras del diccionario. De este modo, el hash queda preparado en un formato sencillo y reutilizable para realizar la prueba de cracking.</p>
+
+  <figure class="single-figure">
+    <h3 class="figure-title">Ataque de diccionario con John the Ripper</h3>
+    <img class="single-figure-image clickable-image" src="../img/kali/crack/3.png" alt="Uso de John the Ripper con el diccionario rockyou para recuperar la contraseña">
+    <figcaption class="single-figure-caption">Uso del diccionario rockyou y de John the Ripper para recuperar la contraseña a partir del hash.</figcaption>
+  </figure>
+
+  <p>Por último, se utiliza el diccionario ejecutando primero <span class="kbd">sudo gunzip /usr/share/wordlists/rockyou.txt.gz</span> para descomprimir el archivo de palabras, y después <span class="kbd">john --format=Raw-SHA256 --wordlist=/usr/share/wordlists/rockyou.txt hash.txt</span> para intentar recuperar la contraseña. La opción <span class="kbd">--format=Raw-SHA256</span> indica el tipo de hash que se está utilizando, mientras que <span class="kbd">--wordlist</span> especifica el diccionario con el que se harán las pruebas. El resultado permite recuperar la contraseña original, demostrando que una clave simple como <span class="kbd">password123</span> puede resolverse con facilidad si aparece en un diccionario conocido.</p>
+
+  <div class="info-box">
+    <p class="note-title">Conclusión</p>
+    <p>Esta práctica permite ver de forma muy clara por qué una contraseña débil sigue siendo un problema incluso cuando se almacena como hash. Si la clave es predecible o forma parte de un diccionario conocido, herramientas como <span class="kbd">John the Ripper</span> pueden recuperarla en muy poco tiempo. El ejercicio sirve para reforzar una idea básica de seguridad: no solo importa cómo se almacenan las contraseñas, sino también la calidad de las propias claves elegidas.</p>
+  </div>
+</section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container" style="text-align: center;">
+  &copy; 2026 Joaquín L. García García · <a href="https://github.com/Joaquin7gg" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">GitHub</a>
+</div>
+  </footer>
+  <div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img" alt="">
+</div>
+
+<script>
+window.addEventListener("load", function () {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = document.getElementById("lightbox-close");
+
+  if (!lightbox || !lightboxImg || !closeBtn) return;
+
+  const images = document.querySelectorAll("main img:not(.section-logo)");
+
+  images.forEach((img) => {
+    img.classList.add("clickable-image");
+
+    img.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      lightboxImg.src = this.dataset.full || this.src;
+      lightboxImg.alt = this.alt || "";
+      lightbox.classList.add("show");
+    });
+  });
+
+  closeBtn.addEventListener("click", function () {
+    lightbox.classList.remove("show");
+  });
+
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) {
+      lightbox.classList.remove("show");
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      lightbox.classList.remove("show");
+    }
+  });
+});
+</script>
+</body>
+</html>

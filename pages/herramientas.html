@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Herramientas de software | Manual de Hardware</title>
+  <meta name="description" content="Manual de usuario para Clonezilla, RAID 6 y Wise Memory Optimizer, con una presentación visual, ordenada y explicativa.">
+  <link rel="icon" type="image/png" href="../img/1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="../index.html">
+        <span class="brand-badge">HW</span>
+        <span>Manual de Hardware y Ciberseguridad</span>
+      </a>
+<nav class="nav-links">
+  <a href="../index.html">Inicio</a>
+  <a href="configuracion.html">Configuración</a>
+  <a href="montaje.html">Montaje</a>
+  <a class="active" href="herramientas.html">Herramientas</a>
+  <a href="analisis.html">Análisis</a>
+  <a href="benchmarks.html">Benchmarks</a>
+  <a href="uefi.html">UEFI</a>
+  <a href="kali.html">Kali</a>
+  <a href="lab-seguro.html">Lab Ético</a>
+  <a href="ciber-labs.html">CiberLabs</a>
+  <a href="sobre-mi.html">Sobre mí</a>
+</nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumbs">
+          <a href="../index.html">Inicio</a>
+          <span>›</span>
+          <span>Herramientas de software</span>
+        </div>
+        
+        <h1>Herramientas de software</h1>
+        <p>En esta sección se presentan herramientas útiles en administración de sistemas y almacenamiento. Se documenta el uso de Clonezilla, RAID 6 y Wise Memory Optimizer de forma visual, ordenada y explicativa.</p>
+      </div>
+    </section>
+
+    <div class="container page-layout">
+      <aside class="toc">
+        <h3>En esta página</h3>
+        <ul>
+          <li><a href="#clonezilla">Clonezilla</a></li>
+          <li><a href="#raid6">RAID 6</a></li>
+          <li><a href="#wise">Wise Memory Optimizer</a></li>
+        </ul>
+      </aside>
+
+      <div class="content">
+        <section class="content-section" id="clonezilla">
+          
+          <div class="section-title-with-logo">
+            <h2>Clonezilla</h2>
+            <img src="../img/soft/24.png" alt="Logo de Clonezilla" class="section-logo">
+          </div>
+
+          <p class="lead">A continuación, se adjuntan las capturas realizadas durante la práctica con Clonezilla. El objetivo es mostrar el proceso de selección del repositorio, creación de la imagen de clonación y validación final del clon generado.</p>
+
+          <div class="info-box" style="margin-top: 1rem;">
+            <p class="note-title">Objetivo de la práctica</p>
+            <p>Clonezilla permite crear imágenes de particiones o discos completos para su restauración posterior. Es una herramienta muy útil para copias de seguridad, despliegue de sistemas y recuperación ante fallos.</p>
+          </div>
+
+          <div class="software-sequence" style="margin-top: 1.5rem;">
+            <article class="software-shot">
+              <h3>Inicio del programa y selección del repositorio</h3>
+              <p>Tras iniciar el programa, Clonezilla solicita seleccionar el dispositivo que se montará como <span class="kbd">/home/partimag</span>, que será la ubicación donde se guardarán las imágenes de clonación.</p>
+              <img src="../img/soft/1.png" alt="Inicio de Clonezilla y selección del repositorio de imágenes" class="software-image">
+            </article>
+
+            <article class="software-shot">
+              <h3>Selección de la partición de almacenamiento</h3>
+              <p>En este paso se selecciona la partición <span class="kbd">/dev/sdb2</span> como repositorio de imágenes, quedando así definida la ubicación donde se almacenará el clon generado por Clonezilla.</p>
+              <img src="../img/soft/2.png" alt="Selección de la partición /dev/sdb2 como repositorio de imágenes" class="software-image">
+            </article>
+
+            <article class="software-shot">
+              <h3>Proceso de creación de la imagen</h3>
+              <p>Aquí se está copiando la partición <span class="kbd">/dev/sdb2</span> a una imagen. El proceso finaliza al <strong>100%</strong> sin errores, lo que confirma que la clonación se ha realizado correctamente.</p>
+              <img src="../img/soft/3.png" alt="Proceso de clonación de la partición /dev/sdb2 a una imagen" class="software-image">
+            </article>
+
+            <article class="software-shot">
+              <h3>Verificación y validación de la imagen creada</h3>
+              <p>En esta imagen, Clonezilla verifica la imagen creada y muestra el resumen del proceso. Se indica que la tabla de particiones es <strong>MBR</strong> y que la imagen almacenada en <span class="kbd">/home/partimag/2025-12-15-20-img</span> es restaurable, por lo que la clonación puede considerarse válida.</p>
+              <img src="../img/soft/4.png" alt="Verificación de la imagen creada en Clonezilla" class="software-image">
+            </article>
+          </div>
+
+          <div class="tip-box" style="margin-top: 1.2rem;">
+            <p class="note-title">Conclusión</p>
+            <p>La práctica demuestra que Clonezilla permite generar una imagen restaurable de forma fiable, verificando tanto el proceso de copia como la integridad del resultado final.</p>
+          </div>
+        </section>
+
+        <section class="content-section" id="raid6">
+          <span class="badge">3.2</span>
+          <div class="section-title-with-logo">
+            <h2>RAID 6</h2>
+            <img src="../img/soft/25.png" alt="Logo de RAID 6" class="section-logo">
+          </div>
+
+          <p class="lead">En esta práctica se documenta la creación y administración de un RAID 6 por software en Ubuntu Server usando <span class="kbd">mdadm</span>. El proceso incluye la preparación de discos, particionado, creación del arreglo, formateo, montaje, configuración persistente y simulación de fallo con disco de reserva.</p>
+
+          <div class="info-box">
+            <p class="note-title">Resumen de la práctica</p>
+            <p>Se parte de una máquina virtual configurada con varios discos adicionales destinados al RAID. A partir de ahí se preparan las particiones, se crea el arreglo <span class="kbd">/dev/md0</span>, se monta en el sistema y finalmente se comprueba su tolerancia a fallos simulando la caída de uno de los discos activos.</p>
+          </div>
+
+          <div class="table-wrap" style="margin-top: 1rem;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Característica</th>
+                  <th>RAID 6</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Tolerancia a fallos</td>
+                  <td>Hasta 2 discos</td>
+                </tr>
+                <tr>
+                  <td>Rendimiento lectura</td>
+                  <td>Bueno</td>
+                </tr>
+                <tr>
+                  <td>Rendimiento escritura</td>
+                  <td>Más penalizado que RAID 5</td>
+                </tr>
+                <tr>
+                  <td>Uso recomendado</td>
+                  <td>Entornos donde prima la seguridad de datos</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="software-sequence" style="margin-top: 1.5rem;">
+            <article class="software-shot">
+              <h3>Configuración inicial de almacenamiento en VirtualBox</h3>
+              <p>Se muestra la configuración de almacenamiento de la máquina virtual en VirtualBox. Hay un controlador SATA con 7 puertos y varios discos virtuales añadidos. Se aprecia un disco principal llamado <span class="kbd">Ubuntu ISO Raid 6.vdi</span> y varios discos <span class="kbd">Raid6_X.vdi</span>, lo que indica que la máquina virtual ya está preparada con un disco de sistema, cinco discos destinados al RAID 6 y un disco adicional configurado como reserva.</p>
+              <img src="../img/soft/5.png" alt="Configuración de almacenamiento de la máquina virtual en VirtualBox" class="software-image">
+              <div class="screenshot-caption">Configuración de almacenamiento de la máquina virtual con un disco principal y varios discos adicionales conectados al controlador SATA.</div>
+            </article>
+
+<article class="software-shot">
+  <h3>Comprobación de discos detectados con lsblk</h3>
+  <p>Se ejecuta <span class="kbd">lsblk</span> para listar los dispositivos de bloques detectados por Ubuntu. El disco <span class="kbd">sda</span> de 15G contiene el sistema, con particiones <span class="kbd">/boot/efi</span>, <span class="kbd">/boot</span> y el volumen lógico <span class="kbd">/</span>. Además aparecen seis discos adicionales de 1G: <span class="kbd">sdb</span>, <span class="kbd">sdc</span>, <span class="kbd">sdd</span>, <span class="kbd">sde</span>, <span class="kbd">sdf</span> y <span class="kbd">sdg</span>. Cinco de ellos se utilizarán como discos activos del RAID 6, mientras que uno quedará configurado como disco de reserva. Todavía no tienen particiones ni puntos de montaje asignados.</p>
+  <img src="../img/soft/6.png" alt="Listado de discos detectados en Ubuntu con lsblk" class="software-image" style="display:block; margin:0 auto;">
+  <div class="screenshot-caption">Listado de discos detectados en Ubuntu, diferenciando el disco del sistema (sda) de los discos vacíos destinados al RAID.</div>
+</article>
+
+            <article class="software-shot">
+              <h3>Inicio de sesión y comprobación de mdadm</h3>
+              <p>Se ve la consola de Ubuntu Server tras iniciar sesión con el usuario <span class="kbd">ubuntu</span>. Aparece el resumen del sistema, incluyendo carga, uso de disco, memoria e IP asignada. Después se instala o verifica <span class="kbd">mdadm</span> con <span class="kbd">sudo apt install mdadm</span>, confirmando que la utilidad necesaria para gestionar RAID software ya está disponible.</p>
+              <img src="../img/soft/7.png" alt="Inicio de sesión en Ubuntu Server y verificación de mdadm" class="software-image">
+              <div class="screenshot-caption">Inicio de sesión en Ubuntu Server e instalación/verificación de mdadm, utilidad necesaria para crear el RAID por software.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Inicio del particionado del primer disco</h3>
+              <p>Se ejecuta <span class="kbd">fdisk</span> sobre el disco <span class="kbd">/dev/sdb</span>, que estaba vacío y sin tabla de particiones reconocida. El sistema crea una nueva etiqueta de disco DOS o MBR y a continuación muestra la ayuda interactiva de <span class="kbd">fdisk</span>, iniciando así el proceso de particionado manual del primer disco destinado al RAID.</p>
+              <img src="../img/soft/8.png" alt="Inicio del particionado del disco /dev/sdb con fdisk" class="software-image">
+              <div class="screenshot-caption">Inicio del particionado del disco /dev/sdb con fdisk, creando una nueva tabla de particiones MBR.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Creación de la partición primaria en /dev/sdb</h3>
+              <p>Dentro de <span class="kbd">fdisk</span> se usa la opción <span class="kbd">n</span> para crear una nueva partición. Se elige una partición primaria, número 1, ocupando todo el disco. El resultado es una partición Linux de aproximadamente 1023 MiB, lista para continuar con su preparación como miembro del arreglo RAID.</p>
+              <img src="../img/soft/9.png" alt="Creación de la primera partición primaria en /dev/sdb" class="software-image">
+              <div class="screenshot-caption">Creación de la primera partición primaria en /dev/sdb, ocupando todo el disco para su uso posterior en el RAID.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Cambio del tipo de partición a Linux raid autodetect</h3>
+              <p>En <span class="kbd">fdisk</span> se consulta la lista de tipos de partición y después se modifica el tipo de <span class="kbd">/dev/sdb1</span> mediante la opción <span class="kbd">t</span>, asignándole el código <span class="kbd">fd</span>, que corresponde a <em>Linux raid autodetect</em>. Con ello, la partición queda marcada específicamente para su uso en un RAID por software.</p>
+              <img src="../img/soft/10.png" alt="Cambio del tipo de partición a Linux raid autodetect" class="software-image">
+              <div class="screenshot-caption">Cambio del tipo de partición de /dev/sdb1 a Linux raid autodetect para prepararla como miembro del RAID.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Replicación de la tabla de particiones en otro disco</h3>
+              <p>Se guardan los cambios en <span class="kbd">/dev/sdb</span> con <span class="kbd">w</span>, se accede al usuario root con <span class="kbd">sudo su</span> y luego se clona la misma tabla de particiones a otro disco con <span class="kbd">sfdisk -d /dev/sdb | sfdisk /dev/sdc</span>. El resultado muestra que en <span class="kbd">/dev/sdc</span> se crea correctamente una partición <span class="kbd">/dev/sdc1</span> del mismo tamaño y tipo.</p>
+              <img src="../img/soft/11.png" alt="Replicación de la tabla de particiones de /dev/sdb sobre /dev/sdc" class="software-image">
+              <div class="screenshot-caption">Replicación de la tabla de particiones de /dev/sdb sobre /dev/sdc mediante sfdisk, manteniendo el mismo esquema para el RAID.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Verificación de todas las particiones creadas</h3>
+              <p>Se observa que el mismo procedimiento se ha aplicado al resto de discos y, tras salir del usuario root con <span class="kbd">exit</span>, el comando <span class="kbd">lsblk</span> confirma que ya existen las particiones <span class="kbd">/dev/sdb1</span>, <span class="kbd">/dev/sdc1</span>, <span class="kbd">/dev/sdd1</span>, <span class="kbd">/dev/sde1</span>, <span class="kbd">/dev/sdf1</span> y <span class="kbd">/dev/sdg1</span>. Todas ellas aparecen con un tamaño aproximado de 1023 MiB.</p>
+              <img src="../img/soft/12.png" alt="Verificación con lsblk de todas las particiones creadas para el RAID" class="software-image">
+              <div class="screenshot-caption">Verificación con lsblk de que todos los discos adicionales ya tienen una partición primaria creada para formar parte del RAID.</div>
+            </article>
+
+<article class="software-shot">
+  <h3>Actualización de paquetes y comprobación de mdadm</h3>
+  <p>Se actualiza el índice de paquetes con <span class="kbd">sudo apt-get update</span> y después se instala o verifica la instalación de <span class="kbd">mdadm</span> con <span class="kbd">sudo apt-get install mdadm</span>. La salida confirma que la herramienta ya estaba en su versión más reciente.</p>
+  <img src="../img/soft/13.png" alt="Actualización de repositorios y comprobación de mdadm" class="software-image clickable-image" style="display:block; margin:0 auto;">
+  <div class="screenshot-caption">Actualización de repositorios y comprobación de la instalación de mdadm, herramienta de gestión de RAID en Linux.</div>
+</article>
+
+            <article class="software-shot">
+              <h3>Creación inicial del RAID 6</h3>
+              <p>Se crea el arreglo con <span class="kbd">sudo mdadm --create --verbose /dev/md0 --level=6 --raid-devices=5 /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1 /dev/sdf1</span>. Después se consulta su estado con <span class="kbd">sudo cat /proc/mdstat</span>, confirmando que <span class="kbd">md0</span> está activo como <span class="kbd">raid6</span>, con los cinco dispositivos detectados y operativos, mostrando el estado <span class="kbd">[UUUUU]</span>.</p>
+              <img src="../img/soft/14.png" alt="Creación del dispositivo /dev/md0 como RAID 6" class="software-image">
+              <div class="screenshot-caption">Creación y comprobación inicial del dispositivo /dev/md0 como arreglo RAID 6 mediante mdadm y mdstat.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Consulta detallada del arreglo RAID</h3>
+              <p>Tras revisar el estado general con <span class="kbd">cat /proc/mdstat</span>, se ejecuta <span class="kbd">sudo mdadm --detail /dev/md0</span> para obtener información completa del arreglo. La salida confirma que <span class="kbd">/dev/md0</span> es un RAID 6 con cinco dispositivos activos, estado <span class="kbd">clean</span>, metadatos versión 1.2, tamaño aproximado de 3 GiB y todas las particiones sincronizadas correctamente.</p>
+              <img src="../img/soft/15.png" alt="Consulta detallada del dispositivo RAID /dev/md0" class="software-image">
+              <div class="screenshot-caption">Consulta detallada del dispositivo /dev/md0, verificando que el RAID 6 está limpio, activo y con todos sus discos sincronizados.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Formateo del dispositivo RAID con ext4</h3>
+              <p>Una vez validado el arreglo, se crea el sistema de archivos con <span class="kbd">sudo mkfs.ext4 /dev/md0</span>. La herramienta informa de la creación correcta del sistema de archivos <span class="kbd">ext4</span>, incluyendo UUID, bloques, inodos y journal, dejando el volumen preparado para su uso.</p>
+              <img src="../img/soft/16.png" alt="Formateo del dispositivo RAID /dev/md0 con ext4" class="software-image">
+              <div class="screenshot-caption">Formateo del dispositivo RAID /dev/md0 con sistema de archivos ext4 para prepararlo para su uso.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Montaje del volumen RAID</h3>
+              <p>Se crea el punto de montaje con <span class="kbd">sudo mkdir /mnt/Raid6</span> y después se monta el volumen con <span class="kbd">sudo mount /dev/md0 /mnt/Raid6</span>. La comprobación con <span class="kbd">lsblk</span> muestra que <span class="kbd">/dev/md0</span> aparece como dispositivo <span class="kbd">raid6</span> de 3G montado en <span class="kbd">/mnt/Raid6</span>.</p>
+              <img src="../img/soft/17.png" alt="Montaje del RAID 6 y verificación con lsblk" class="software-image">
+              <div class="screenshot-caption">Montaje del RAID 6 en /mnt/Raid6 y verificación de su asociación mediante lsblk.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Prueba de escritura en el volumen</h3>
+              <p>Dentro del volumen montado se crea y edita un archivo de prueba llamado <span class="kbd">joaquin.txt</span> usando el editor <span class="kbd">nano</span>. En la ventana se observa el texto guardado, lo que sirve para comprobar que el sistema de archivos del RAID permite almacenar datos con normalidad.</p>
+              <img src="../img/soft/18.png" alt="Creación de un archivo de prueba en el volumen RAID" class="software-image">
+              <div class="screenshot-caption">Creación de un archivo de prueba en el volumen RAID para verificar su funcionamiento de escritura.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Lectura del archivo y configuración persistente</h3>
+              <p>Se comprueba el contenido del archivo con <span class="kbd">cat joaquin.txt</span> y después se revisa la configuración de <span class="kbd">mdadm</span> con <span class="kbd">cat /etc/mdadm/mdadm.conf</span>. A continuación se añade la definición del arreglo al archivo de configuración, se actualiza el arranque con <span class="kbd">sudo update-initramfs -u</span> y finalmente se agrega una entrada persistente en <span class="kbd">/etc/fstab</span> para que el RAID se monte automáticamente tras reiniciar.</p>
+              <img src="../img/soft/19.png" alt="Verificación del archivo de prueba y configuración persistente del RAID" class="software-image">
+              <div class="screenshot-caption">Verificación del archivo de prueba y configuración del sistema para que el RAID se detecte y monte automáticamente tras reiniciar.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Estado inicial con disco de reserva</h3>
+              <p>En esta captura se comprueba el estado del arreglo con <span class="kbd">sudo mdadm --detail /dev/md0</span> y se observa que el RAID 6 sigue formado por cinco discos activos y un disco de reserva. La salida muestra <span class="kbd">Working Devices: 6</span>, <span class="kbd">Spare Devices: 1</span> y especifica que <span class="kbd">/dev/sdg1</span> está asignado como <em>spare</em>.</p>
+              <img src="../img/soft/20.png" alt="Estado inicial del RAID 6 con disco de reserva" class="software-image">
+              <div class="screenshot-caption">Estado inicial del RAID 6 antes de la simulación de fallo, con un disco de reserva configurado como repuesto automático.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Simulación de fallo de un disco</h3>
+              <p>Aquí se simula una avería manual del disco <span class="kbd">/dev/sdd1</span> mediante <span class="kbd">sudo mdadm --manage --fail /dev/md0 /dev/sdd1</span>, provocando que el sistema lo marque como defectuoso. Al volver a consultar el estado del arreglo, se aprecia que <span class="kbd">/dev/sdd1</span> pasa a estado <span class="kbd">faulty</span> y que el disco de reserva <span class="kbd">/dev/sdg1</span> entra automáticamente en servicio como disco activo sincronizado.</p>
+              <img src="../img/soft/21.png" alt="Simulación del fallo de un disco del RAID y activación del spare" class="software-image">
+              <div class="screenshot-caption">Simulación de la caída de un disco del RAID y activación automática del disco de reserva para mantener la redundancia.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Intento de retirada del disco averiado</h3>
+              <p>Después del fallo simulado, se intenta retirar el disco averiado con <span class="kbd">sudo mdadm --manage /dev/md0 --remove /dev/sdd1</span>. El sistema responde que no puede eliminarlo en ese momento. Aun así, una nueva comprobación con <span class="kbd">sudo mdadm --detail /dev/md0</span> confirma que el RAID continúa operativo y estabilizado tras la sustitución lógica realizada con el disco de repuesto.</p>
+              <img src="../img/soft/22.png" alt="Intento de retirada del disco averiado y verificación del arreglo" class="software-image">
+              <div class="screenshot-caption">Intento de retirada del disco averiado y verificación de que el arreglo sigue funcionando correctamente tras la reconfiguración.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Reincorporación del disco como reserva</h3>
+              <p>En esta última captura se vuelve a añadir el disco <span class="kbd">/dev/sdd1</span> al arreglo usando <span class="kbd">sudo mdadm --manage /dev/md0 --add /dev/sdd1</span>. La salida confirma su incorporación y, al revisar otra vez el estado con <span class="kbd">sudo mdadm --detail /dev/md0</span>, se ve que el RAID mantiene cinco discos activos y ahora <span class="kbd">/dev/sdd1</span> queda nuevamente como <em>spare</em>, restaurando así la configuración con un disco de reserva disponible.</p>
+              <img src="../img/soft/23.png" alt="Reincorporación del disco al RAID como unidad de reserva" class="software-image">
+              <div class="screenshot-caption">Reincorporación del disco al RAID como unidad de reserva tras la simulación de fallo y recuperación del arreglo.</div>
+            </article>
+          </div>
+
+          <div class="tip-box" style="margin-top: 1.2rem;">
+            <p class="note-title">Conclusión</p>
+            <p>La práctica demuestra que un RAID 6 por software ofrece tolerancia a fallos y continuidad de servicio, especialmente cuando se combina con un disco de reserva preparado para entrar automáticamente en funcionamiento ante una incidencia.</p>
+          </div>
+        </section>
+
+        <section class="content-section" id="wise">
+          
+          <div class="section-title-with-logo">
+            <h2>Wise Memory Optimizer</h2>
+            <img src="../img/soft/26.png" alt="Logo de Wise Memory Optimizer" class="section-logo">
+          </div>
+
+          <p class="lead">En un portátil Asus TUF Gaming F15, se ha realizado una liberación de memoria RAM utilizando el programa Wise Memory Optimizer. A continuación, se muestra el proceso antes y después de optimizar la memoria, junto con la configuración aplicada.</p>
+
+          <div class="info-box">
+            <p class="note-title">Objetivo de la práctica</p>
+            <p>Esta herramienta permite liberar memoria RAM ocupada por procesos en segundo plano y mejorar la disponibilidad de recursos del sistema. También puede configurarse para optimizar de forma automática según distintos criterios.</p>
+          </div>
+
+<div class="software-sequence" style="margin-top: 1.5rem;">
+  <article class="software-shot">
+    <h3>Estado inicial de la memoria</h3>
+    <p>Se muestra el uso de memoria antes de optimizar. La RAM utilizada es de <strong>10,42 GB (33%)</strong> y hay <strong>21,33 GB disponibles (67%)</strong>. El sistema está funcionando con una carga moderada de memoria. En este punto se pulsa el botón <span class="kbd">Optimizar</span> para liberar recursos.</p>
+    <img src="../img/soft/27.png" alt="Estado inicial de la memoria antes de optimizar con Wise Memory Optimizer" class="software-image clickable-image" style="display:block; margin:0 auto;">
+    <div class="screenshot-caption" style="text-align: center;">Estado inicial de la memoria.</div>
+            </article>
+
+  <article class="software-shot">
+    <h3>Confirmación de memoria liberada</h3>
+    <p>El programa confirma que se han liberado <strong>3,06 GB</strong> de memoria. Aparece una notificación indicando la cantidad optimizada. Esto significa que varios procesos en segundo plano han sido limpiados, aumentando así la memoria disponible del sistema.</p>
+    <img src="../img/soft/28.png" alt="Confirmación de memoria liberada por Wise Memory Optimizer" class="software-image clickable-image" style="display:block; margin:0 auto;">
+    <div class="screenshot-caption" style="text-align: center;">Confirmación de memoria liberada.</div>
+  </article>
+
+            <article class="software-shot">
+              <h3>Estado después de la optimización</h3>
+              <p>Tras la optimización, el uso de RAM baja al <strong>23%</strong>, con <strong>7,31 GB en uso</strong>. La memoria disponible aumenta a <strong>24,44 GB (77%)</strong>. Se observa una mejora clara en la disponibilidad del sistema, dejando el equipo con más recursos libres para otras tareas.</p>
+              <img src="../img/soft/29.png" alt="Estado de la memoria después de optimizar con Wise Memory Optimizer" class="software-image">
+              <div class="screenshot-caption" style="text-align: center;">Estado después de la optimización.</div>
+            </article>
+
+            <article class="software-shot">
+              <h3>Configuración del programa</h3>
+              <p>En esta captura se muestran las opciones de configuración activadas. Está habilitada la optimización automática cuando la memoria baja al <strong>30%</strong>. Además, el programa solo se ejecuta cuando la CPU está libre. El idioma está configurado en español y se muestran notificaciones tras cada optimización.</p>
+              <img src="../img/soft/30.png" alt="Configuración de Wise Memory Optimizer" class="software-image clickable-image" style="display:block; margin:0 auto;"">
+              <div class="screenshot-caption" style="text-align: center;">Configuración del programa.</div>
+            </article>
+          </div>
+
+          <div class="tip-box" style="margin-top: 1.2rem;">
+            <p class="note-title">Conclusión</p>
+            <p>La prueba muestra que Wise Memory Optimizer puede liberar una cantidad apreciable de RAM y mejorar la disponibilidad del sistema de forma inmediata. También destaca por permitir automatizar este proceso según el estado de la memoria y la carga de la CPU.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+<div class="container" style="text-align: center;">
+  &copy; 2026 Joaquín L. García García · <a href="https://github.com/Joaquin7gg" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">GitHub</a>
+</div>
+  </footer>
+    <div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img" alt="">
+</div>
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img" alt="">
+</div>
+
+<script>
+window.addEventListener("load", function () {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = document.getElementById("lightbox-close");
+
+  if (!lightbox || !lightboxImg || !closeBtn) return;
+
+  const images = document.querySelectorAll("main img:not(.section-logo)");
+
+  images.forEach((img) => {
+    img.classList.add("clickable-image");
+
+    img.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      lightboxImg.src = this.dataset.full || this.src;
+      lightboxImg.alt = this.alt || "";
+      lightbox.classList.add("show");
+    });
+  });
+
+  closeBtn.addEventListener("click", function () {
+    lightbox.classList.remove("show");
+  });
+
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) {
+      lightbox.classList.remove("show");
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      lightbox.classList.remove("show");
+    }
+  });
+});
+</script>
+</body>
+</html>

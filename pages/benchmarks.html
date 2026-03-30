@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benchmarks | Manual de Hardware</title>
+  <meta name="description" content="Resultados de benchmarks del equipo con CPU-Z, Cinebench, UserBenchmark y CrystalDiskMark.">
+  <link rel="icon" type="image/png" href="../img/1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="../index.html">
+        <span class="brand-badge">HW</span>
+        <span>Manual de Hardware y Ciberseguridad</span>
+      </a>
+<nav class="nav-links">
+  <a href="../index.html">Inicio</a>
+  <a href="configuracion.html">Configuración</a>
+  <a href="montaje.html">Montaje</a>
+  <a href="herramientas.html">Herramientas</a>
+  <a href="analisis.html">Análisis</a>
+  <a class="active" href="benchmarks.html">Benchmarks</a>
+  <a href="uefi.html">UEFI</a>
+  <a href="kali.html">Kali</a>
+  <a href="lab-seguro.html">Lab Ético</a>
+  <a href="ciber-labs.html">CiberLabs</a>
+  <a href="sobre-mi.html">Sobre mí</a>
+</nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumbs">
+          <a href="../index.html">Inicio</a>
+          <span>›</span>
+          <span>Benchmarks</span>
+        </div>
+        
+        <h1>Herramientas de benchmarks</h1>
+        <p>En esta sección se presentan distintas pruebas de rendimiento realizadas al equipo, comparando resultados previos y posteriores a la corrección de la configuración del procesador, así como el rendimiento general de CPU, GPU y almacenamiento.</p>
+      </div>
+    </section>
+
+    <div class="container page-layout">
+      <aside class="toc">
+        <h3>En esta página</h3>
+        <ul>
+          <li><a href="#cpuzbench">CPU-Z</a></li>
+          <li><a href="#cinebench">Cinebench</a></li>
+          <li><a href="#userbenchmark">UserBenchmark</a></li>
+          <li><a href="#diskmark">CrystalDiskMark</a></li>
+        </ul>
+      </aside>
+
+      <div class="content">
+        <section class="content-section" id="cpuzbench">
+          
+          <div class="section-title-with-logo">
+            <h2>CPU-Z</h2>
+            <img src="../img/bench/11.png" alt="Logo de CPU-Z" class="section-logo">
+          </div>
+
+          <p class="lead">En esta prueba se comparan los resultados del benchmark de CPU-Z antes y después de corregir el problema que hacía que el procesador trabajara a la mitad de su potencial.</p>
+
+          <div class="benchmark-pair">
+            <img src="../img/bench/1.png" alt="Benchmark CPU-Z con la CPU a mitad de rendimiento" class="benchmark-pair-img">
+            <img src="../img/bench/2.png" alt="Benchmark CPU-Z con la CPU funcionando correctamente" class="benchmark-pair-img">
+          </div>
+          <div class="benchmark-caption">A la izquierda, resultados con la mitad de su potencial. A la derecha, funcionando como debe.</div>
+        </section>
+
+        <section class="content-section" id="cinebench">
+          
+          <div class="section-title-with-logo">
+            <h2>Cinebench</h2>
+            <img src="../img/bench/12.png" alt="Logo de Cinebench" class="section-logo">
+          </div>
+
+          <p class="lead">Cinebench permite medir el rendimiento del procesador tanto en tareas multihilo como en pruebas de un solo núcleo, lo que facilita observar la mejora conseguida tras resolver el problema de configuración.</p>
+
+          <div class="benchmark-pair">
+            <img src="../img/bench/3.png" alt="Cinebench multi core con rendimiento reducido" class="benchmark-pair-img">
+            <img src="../img/bench/4.png" alt="Cinebench multi core con rendimiento correcto" class="benchmark-pair-img">
+          </div>
+          <div class="benchmark-caption">A la izquierda puntuación a la mitad de rendimiento en multi core, 575 puntos. A la derecha, 1157.</div>
+
+          <div class="benchmark-pair" style="margin-top: 1.5rem;">
+            <img src="../img/bench/5.png" alt="Cinebench single core con rendimiento reducido" class="benchmark-pair-img">
+            <img src="../img/bench/6.png" alt="Cinebench single core con rendimiento correcto" class="benchmark-pair-img">
+          </div>
+          <div class="benchmark-caption">A la izquierda puntuación a la mitad de rendimiento en single core, 81 puntos. A la derecha, 85.</div>
+        </section>
+
+        <section class="content-section" id="userbenchmark">
+          
+          <div class="section-title-with-logo">
+            <h2>UserBenchmark</h2>
+            <img src="../img/bench/13.png" alt="Logo de UserBenchmark" class="section-logo">
+          </div>
+
+          <p class="lead">UserBenchmark ofrece una visión global del rendimiento del equipo, permitiendo valorar de forma conjunta procesador, gráfica, memoria y almacenamiento.</p>
+
+<div class="benchmark-stack">
+  <img src="../img/bench/7.png" alt="Primer resultado de UserBenchmark" class="benchmark-stack-img">
+  <img src="../img/bench/8.png" alt="Segundo resultado de UserBenchmark" class="benchmark-stack-img">
+</div>
+
+          <div class="software-shot" style="margin-top: 1.2rem;">
+            <p>En estas dos capturas se muestran los resultados en <strong>Userbench</strong>, donde se puede comprobar las buenas prestaciones del ordenador y el rendimiento que ofrece.</p>
+          </div>
+        </section>
+
+        <section class="content-section" id="diskmark">
+          <span class="badge">5.4</span>
+          <div class="section-title-with-logo">
+            <h2>CrystalDiskMark</h2>
+            <img src="../img/bench/14.png" alt="Logo de CrystalDiskMark" class="section-logo">
+          </div>
+
+          <p class="lead">CrystalDiskMark permite medir las velocidades de lectura y escritura de las unidades de almacenamiento, tanto en condiciones de velocidad punta como en escenarios más cercanos al uso real.</p>
+
+          <div class="benchmark-pair benchmark-pair-large">
+            <img src="../img/bench/9.png" alt="Primer resultado de CrystalDiskMark" class="benchmark-pair-img">
+            <img src="../img/bench/10.png" alt="Segundo resultado de CrystalDiskMark" class="benchmark-pair-img">
+          </div>
+
+          <div class="software-shot" style="margin-top: 1.2rem;">
+            <p>El benchmark realizado a los discos duros confirman lo ya mencionado anteriormente. <strong>C:</strong>, al estar en la ranura <strong>PCIe 4.0</strong>, tiene mejores velocidades que <strong>A:</strong>. Analizando un poco los datos, la primera columna analiza la <strong>velocidad punta</strong>, la segunda es el <strong>uso real diario</strong> mientras que las restantes se analizan velocidades dentro de <strong>archivos pequeños</strong>. En general, valores normales en M.2 de estas características.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container" style="text-align: center;">
+  &copy; 2026 Joaquín L. García García · <a href="https://github.com/Joaquin7gg" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">GitHub</a>
+</div>
+  </footer>
+<div id="lightbox" class="lightbox">
+  <span class="lightbox-close" id="lightbox-close">&times;</span>
+  <img id="lightbox-img" class="lightbox-content" alt="Imagen ampliada">
+</div>
+
+<script>
+window.addEventListener("load", function () {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = document.getElementById("lightbox-close");
+
+  if (!lightbox || !lightboxImg || !closeBtn) return;
+
+  const images = document.querySelectorAll(
+    "main img:not(.section-logo):not(.section-cover img)"
+  );
+
+  images.forEach((img) => {
+    img.classList.add("clickable-image");
+    img.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      lightboxImg.src = this.src;
+      lightboxImg.alt = this.alt || "";
+      lightbox.classList.add("show");
+    });
+  });
+
+  closeBtn.addEventListener("click", function () {
+    lightbox.classList.remove("show");
+  });
+
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) {
+      lightbox.classList.remove("show");
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      lightbox.classList.remove("show");
+    }
+  });
+});
+</script>
+</body>
+</html>

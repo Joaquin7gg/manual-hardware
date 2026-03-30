@@ -1,0 +1,226 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Montaje y mantenimiento de equipos | Manual de Hardware</title>
+  <meta name="description" content="Manual didáctico sobre el montaje físico de un ordenador y su mantenimiento preventivo, con apoyo visual paso a paso.">
+  <link rel="icon" type="image/png" href="../img/1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="../index.html">
+        <span class="brand-badge">HW</span>
+        <span>Manual de Hardware y Ciberseguridad</span>
+      </a>
+<nav class="nav-links">
+  <a href="../index.html">Inicio</a>
+  <a href="configuracion.html">Configuración</a>
+  <a class="active" href="montaje.html">Montaje</a>
+  <a href="herramientas.html">Herramientas</a>
+  <a href="analisis.html">Análisis</a>
+  <a href="benchmarks.html">Benchmarks</a>
+  <a href="uefi.html">UEFI</a>
+  <a href="kali.html">Kali</a>
+  <a href="lab-seguro.html">Lab Ético</a>
+  <a href="ciber-labs.html">CiberLabs</a>
+  <a href="sobre-mi.html">Sobre mí</a>
+</nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumbs">
+          <a href="../index.html">Inicio</a>
+          <span>›</span>
+          <span>Montaje y mantenimiento de equipos</span>
+        </div>
+        
+        <h1>Montaje y mantenimiento de equipos</h1>
+        <p>En esta sección se explica de forma ordenada el proceso de montaje físico de un ordenador, desde la preparación del espacio de trabajo hasta la instalación final del sistema operativo y los controladores. El objetivo es mostrar un procedimiento claro, seguro y fácil de seguir.</p>
+      </div>
+    </section>
+
+    <div class="container page-layout">
+      <aside class="toc">
+        <h3>En esta página</h3>
+        <ul>
+          <li><a href="#montaje">Proceso de montaje</a></li>
+          <li><a href="#herramientas">Herramientas necesarias</a></li>
+          <li><a href="#pasos">Montaje paso a paso</a></li>
+          <li><a href="#mantenimiento">Mantenimiento</a></li>
+        </ul>
+      </aside>
+
+      <div class="content">
+        <section class="content-section" id="montaje">
+          <div class="header-with-icon">
+                    <h2>Manual de montaje y mantenimiento de equipos</h2>
+                    <img src="../img/mont/15.png" alt="Icono montaje" class="section-icon">
+  </div>
+                    
+          <p class="lead">A la hora de montar un ordenador, es muy importante disponer de un espacio de trabajo adecuado en el que se pueda realizar todo lo necesario para dar forma al equipo. Para ello, conviene trabajar sobre una mesa lo suficientemente amplia, ordenada y bien iluminada, además de reunir las herramientas necesarias antes de comenzar.</p>
+
+          <div class="info-box" id="herramientas" style="margin-top: 1rem;">
+            <p class="note-title">Preparación previa</p>
+            <p>Antes de empezar el montaje, es recomendable revisar que se dispone de todas las piezas, una superficie limpia de trabajo y los utensilios adecuados para evitar interrupciones durante el proceso.</p>
+          </div>
+
+          <h3 style="margin-top: 1.5rem;">Herramientas necesarias</h3>
+          <ul class="steps">
+            <li><strong>Destornillador</strong>, preferiblemente un <strong>Phillips #2</strong>, para atornillar la mayoría de componentes a la torre.</li>
+            <li><strong>Alicates</strong>, útiles en tareas concretas como cortar bridas o ajustar ciertos elementos.</li>
+            <li><strong>Bridas</strong>, fundamentales para ordenar los cables dentro del chasis y mejorar el flujo de aire.</li>
+            <li><strong>Bandeja magnética</strong>, muy útil para dejar tornillos y piezas metálicas sin riesgo de pérdida.</li>
+            <li><strong>Linterna</strong>, práctica para revisar zonas poco visibles dentro de la caja.</li>
+            <li><strong>Alcohol IPA</strong>, empleado para limpiar componentes electrónicos y muy útil también en tareas de mantenimiento.</li>
+          </ul>
+
+          <div class="warning-box" style="margin-top: 1rem;">
+            <p class="note-title">Atención</p>
+            <p>Durante el montaje hay que evitar forzar conectores, tocar contactos sensibles sin necesidad y aplicar una presión excesiva sobre la placa base, el procesador o la tarjeta gráfica.</p>
+          </div>
+        </section>
+
+        <section class="content-section" id="pasos">
+                    <h2>Proceso de ensamblaje del equipo</h2>
+          <p class="lead">Una vez que la mesa de trabajo y las herramientas están listas, es hora de ponerse manos a la obra. A continuación se describe el montaje de forma secuencial, acompañado de imágenes del proceso.</p>
+
+          <div class="steps-grid">
+            <article class="step-card">
+              <div class="step-number">1</div>
+              <h3>Preparar la placa base y montar la CPU</h3>
+              <p>Lo primero es situar la placa base sobre la mesa de trabajo y colocar el procesador en su socket correspondiente. Este paso debe realizarse con cuidado, respetando la orientación correcta del procesador y evitando cualquier presión innecesaria sobre los pines o contactos.</p>
+              <img src="../img/mont/1.png" alt="Montaje inicial de la placa base y procesador" class="manual-image">
+            </article>
+
+            <article class="step-card">
+              <div class="step-number">2</div>
+              <h3>Aplicar pasta térmica e instalar el disipador</h3>
+              <p>Una vez instalada la CPU, se aplica una pequeña cantidad de pasta térmica sobre el procesador, normalmente en forma de guisante. Después se coloca el disipador encima y se fija siguiendo el sistema de anclaje correspondiente.</p>
+              <img src="../img/mont/2.png" alt="Aplicación de pasta térmica e instalación del disipador" class="manual-image">
+            </article>
+
+            <article class="step-card">
+              <div class="step-number">3</div>
+              <h3>Conectar el ventilador del disipador</h3>
+              <p>Cuando el sistema de refrigeración ya está instalado, se conecta el cable del ventilador a la cabecera <strong>CPU_FAN</strong> de la placa base. Este paso es importante para que el sistema pueda controlar correctamente la refrigeración del procesador.</p>
+              <img src="../img/mont/3.png" alt="Conexión del ventilador al puerto CPU_FAN" class="manual-image">
+            </article>
+
+            <article class="step-card">
+              <div class="step-number">4</div>
+              <h3>Instalar la memoria RAM</h3>
+              <p>El siguiente paso consiste en colocar los módulos de memoria RAM. Según los modelos de memoria y la placa base utilizada, lo ideal es aprovechar la configuración <strong>Dual Channel</strong>, colocándolos en las ranuras recomendadas por el fabricante.</p>
+              <img src="../img/mont/4.png" alt="Instalación de los módulos de memoria RAM" class="manual-image">
+            </article>
+
+            <article class="step-card">
+              <div class="step-number">5</div>
+              <h3>Preparar la caja y colocar los standoffs</h3>
+              <p>Con la placa base ya preparada, toca instalarla en la caja. Antes de hacerlo, se colocan los <strong>standoffs</strong>, que elevan la placa sobre el chasis y ayudan a prevenir cortocircuitos al evitar el contacto directo con el metal de la torre.</p>
+              <img src="../img/mont/5.png" alt="Preparación de la caja y colocación de standoffs" class="manual-image">
+            </article>
+
+            <article class="step-card">
+              <div class="step-number">6</div>
+              <h3>Instalar y atornillar la placa base</h3>
+              <p>Después se introduce la placa base en la caja, asegurándose de que el panel de conexiones trasero encaje correctamente en la abertura correspondiente. Una vez alineada, se atornilla de forma suave y progresiva.</p>
+              <img src="../img/mont/6.png" alt="Instalación de la placa base dentro de la caja" class="manual-image">
+            </article>
+
+            <article class="step-card">
+              <div class="step-number">7</div>
+              <h3>Preparar e instalar la fuente de alimentación</h3>
+              <p>Antes de fijar la fuente de alimentación a la caja, es recomendable conectar primero los cables principales, como el <strong>ATX de 24 pines</strong> y el <strong>EPS de 8 pines</strong>, ya que así se trabaja con mayor comodidad. Después se orienta correctamente el ventilador y se atornilla a la torre.</p>
+              <img src="../img/mont/7.png" alt="Instalación de la fuente de alimentación" class="manual-image">
+            </article>
+
+            <article class="step-card">
+              <div class="step-number">8</div>
+              <h3>Primera comprobación POST</h3>
+              <p>En este punto puede realizarse un primer encendido para comprobar el <strong>POST</strong>, es decir, la verificación inicial que hace la placa base sobre los componentes instalados. En placas actuales suele hacerse mediante LEDs de diagnóstico. Lo normal en esta fase es que se detecte la ausencia de la tarjeta gráfica.</p>
+              <img src="../img/mont/8.png" alt="Primera comprobación POST del sistema" class="manual-image">
+            </article>
+
+            <article class="step-card">
+              <div class="step-number">9</div>
+              <h3>Instalar la tarjeta gráfica</h3>
+              <p>Ahora llega el turno de la GPU. Muchas placas modernas disponen de una palanca de liberación que facilita la instalación. La gráfica se alinea con la ranura PCIe correspondiente y se introduce con firmeza, pero sin aplicar fuerza excesiva.</p>
+              <img src="../img/mont/9.png" alt="Instalación de la tarjeta gráfica en la ranura PCIe" class="manual-image">
+            </article>
+
+            <article class="step-card">
+              <div class="step-number">10</div>
+              <h3>Instalar el almacenamiento y finalizar</h3>
+              <p>Uno de los pasos finales es añadir el almacenamiento. Actualmente lo más habitual es usar un <strong>M.2</strong> como unidad principal por su elevada velocidad. Para instalarlo, se inserta en su ranura, se presiona hacia abajo y se atornilla. Si se desea, también pueden añadirse unidades SSD o HDD adicionales. Con todo listo, se realiza el encendido final, se instala el sistema operativo desde un USB y, una vez en el escritorio, se descargan e instalan los drivers necesarios para dejar el equipo completamente optimizado.</p>
+              <img src="../img/mont/10.png" alt="Instalación del almacenamiento y finalización del montaje" class="manual-image">
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section" id="mantenimiento">
+          
+          <h2>Revisión y mantenimiento preventivo</h2>
+          <p class="lead">Una vez montado el ordenador, conviene realizar pequeñas tareas de mantenimiento preventivo para garantizar su buen funcionamiento a medio y largo plazo.</p>
+
+<div class="grid grid-2">
+  <div class="card">
+    <div class="card-maintenance">
+      <h3>Limpieza periódica</h3>
+      <div class="card-maintenance-icon-wrap">
+        <img src="../img/mont/11.png" alt="Icono de limpieza periódica" class="card-maintenance-icon">
+      </div>
+      <p>Es recomendable eliminar el polvo acumulado en ventiladores, filtros, rejillas y disipadores, ya que una acumulación excesiva puede empeorar la refrigeración del equipo.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-maintenance">
+      <h3>Revisión del cableado</h3>
+      <div class="card-maintenance-icon-wrap">
+        <img src="../img/mont/12.png" alt="Icono de revisión del cableado" class="card-maintenance-icon">
+      </div>
+      <p>Un cableado ordenado no solo mejora la estética interior, sino también el flujo de aire y la facilidad para futuras ampliaciones o reparaciones.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-maintenance">
+      <h3>Comprobación de temperaturas</h3>
+      <div class="card-maintenance-icon-wrap">
+        <img src="../img/mont/13.png" alt="Icono de comprobación de temperaturas" class="card-maintenance-icon">
+      </div>
+      <p>Tras el montaje y durante el uso del equipo, es útil revisar las temperaturas para detectar posibles problemas de ventilación o mala aplicación de pasta térmica.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-maintenance">
+      <h3>Actualización de drivers</h3>
+      <div class="card-maintenance-icon-wrap">
+        <img src="../img/mont/14.png" alt="Icono de actualización de drivers" class="card-maintenance-icon">
+      </div>
+      <p>Instalar y mantener actualizados los controladores del chipset, la tarjeta gráfica, la red y el almacenamiento ayuda a que el ordenador funcione de forma estable y optimizada.</p>
+    </div>
+  </div>
+</div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container" style="text-align: center;">
+  &copy; 2026 Joaquín L. García García · <a href="https://github.com/Joaquin7gg" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">GitHub</a>
+</div>
+  </footer>
+</body>
+</html>

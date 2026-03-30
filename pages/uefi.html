@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Herramientas arrancando desde UEFI | Manual de Hardware</title>
+  <meta name="description" content="Guía sobre MemTest86 y GParted desde entornos de arranque o mantenimiento.">
+  <link rel="icon" type="image/png" href="../img/1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="../index.html">
+        <span class="brand-badge">HW</span>
+        <span>Manual de Hardware y Ciberseguridad</span>
+      </a>
+<nav class="nav-links">
+  <a href="../index.html">Inicio</a>
+  <a href="configuracion.html">Configuración</a>
+  <a href="montaje.html">Montaje</a>
+  <a href="herramientas.html">Herramientas</a>
+  <a href="analisis.html">Análisis</a>
+  <a href="benchmarks.html">Benchmarks</a>
+  <a class="active" href="uefi.html">UEFI</a>
+  <a href="kali.html">Kali</a>
+  <a href="lab-seguro.html">Lab Ético</a>
+  <a href="ciber-labs.html">CiberLabs</a>
+  <a href="sobre-mi.html">Sobre mí</a>
+</nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumbs">
+          <a href="../index.html">Inicio</a>
+          <span>›</span>
+          <span>Herramientas arrancando desde UEFI</span>
+        </div>
+        
+        <h1>Herramientas arrancando desde UEFI</h1>
+        <p>En esta sección se presentan herramientas que pueden utilizarse desde entornos de arranque o mantenimiento, orientadas al diagnóstico del hardware y la gestión de particiones.</p>
+      </div>
+    </section>
+
+    <div class="container page-layout">
+      <aside class="toc">
+        <h3>En esta página</h3>
+        <ul>
+          <li><a href="#memtest">MemTest86</a></li>
+          <li><a href="#gparted">GParted</a></li>
+        </ul>
+      </aside>
+
+      <div class="content">
+        <section class="content-section" id="memtest">
+          
+          <div class="section-title-with-logo">
+            <h2>MemTest86</h2>
+            <img src="../img/uefi/7.png" alt="Logo de MemTest86" class="section-logo">
+          </div>
+
+          <p class="lead">MemTest86 es un programa muy útil que permite realizar un análisis exhaustivo de la memoria RAM.</p>
+
+          <div class="software-shot" style="margin-top: 1.2rem;">
+            <p>En este caso, se realizó la prueba de memoria con anterioridad ya que se estaban sufriendo congelaciones extrañas en el ordenador. Por lo que se usó este test para conocer si el problema estaba en la RAM. Finalmente, no era problema de la RAM, sino una incompatibilidad con el programa <strong>Armoury Crate</strong> de Asus. Al desinstalarlo, las congelaciones desaparecieron por completo.</p>
+
+            <p>Los resultados tras el test indican <strong>cero errores</strong> durante las <strong>cuatro pasadas</strong> que realizó en aproximadamente <strong>5 horas</strong>, todo ello a una velocidad de <strong>3600 MT/s</strong> y con unas temperaturas que oscilaron entre <strong>38 y 49 grados</strong>.</p>
+          </div>
+
+          <div class="info-box" style="margin-top: 1rem;">
+            <p class="note-title">Conclusión</p>
+            <p>La prueba permitió descartar un fallo físico en la memoria RAM y orientar el diagnóstico hacia un problema de software. En este caso, la causa real estaba en la incompatibilidad con Armoury Crate. En este <a href="https://drive.google.com/file/d/19s2n-k52Qd_jldDLmenhWDzmlVCI5QKQ/view" target="_blank" rel="noopener noreferrer">enlace</a> se comparten los resultados</p>
+          </div>
+        </section>
+
+       <section class="content-section" id="gparted">
+  
+  <div class="section-title-with-logo">
+    <h2>GParted</h2>
+    <img src="../img/uefi/8.png" alt="Logo de GParted" class="section-logo">
+  </div>
+
+  <p class="lead">GParted es una herramienta muy útil para gestionar particiones desde un entorno de arranque. Permite crear, eliminar, redimensionar, mover y revisar particiones de forma visual y bastante intuitiva.</p>
+
+  <div class="warning-box">
+    <p class="note-title">Importante</p>
+    <p>Antes de realizar cualquier cambio en las particiones, conviene hacer una copia de seguridad de los datos importantes. Una modificación incorrecta puede provocar pérdida de información o impedir el arranque del sistema.</p>
+  </div>
+
+  <div class="software-sequence" style="margin-top: 1.4rem;">
+    <article class="software-shot">
+      <h3>Disco sin tabla de particiones</h3>
+      <p>Una vez arrancado en una máquina virtual, esta captura muestra el disco duro seleccionado, aún sin ninguna tabla de particiones.</p>
+      <img src="../img/uefi/1.png" alt="Disco sin tabla de particiones en GParted" class="software-image">
+    </article>
+
+    <article class="software-shot">
+      <h3>Creación de la tabla GPT</h3>
+      <p>Para ello, creamos la tabla de particiones utilizando el esquema <strong>GPT</strong>.</p>
+      <img src="../img/uefi/2.png" alt="Creación de la tabla de particiones GPT en GParted" class="software-image">
+    </article>
+
+    <article class="software-shot">
+      <h3>Valores elegidos para la tabla</h3>
+      <p>Esta captura muestra los valores otorgados durante la creación de la tabla.</p>
+      <img src="../img/uefi/3.png" alt="Valores configurados durante la creación de la tabla de particiones" class="software-image">
+    </article>
+
+    <article class="software-shot">
+      <h3>Proceso de creación en curso</h3>
+      <p>Momento en el que GParted está trabajando para crear la tabla de particiones.</p>
+      <img src="../img/uefi/4.png" alt="Proceso de creación de la tabla de particiones en GParted" class="software-image">
+    </article>
+
+    <article class="software-shot">
+      <h3>Configuración de la partición EFI</h3>
+      <p>En esta captura se configura la partición <strong>EFI</strong>, activando los flags <strong>boot</strong> y <strong>esp</strong>, dejando así la partición <strong>FAT32</strong> preparada como <strong>EFI System Partition</strong> para un sistema UEFI con tabla GPT.</p>
+      <img src="../img/uefi/5.png" alt="Configuración de la partición EFI con flags boot y esp en GParted" class="software-image">
+    </article>
+
+    <article class="software-shot">
+      <h3>Resultado final</h3>
+      <p>Captura final. A modo de resumen, se utilizó GParted en una máquina virtual de VirtualBox configurada en modo <strong>UEFI</strong>. Luego, se creó una tabla de particiones <strong>GPT</strong> sobre el disco virtual <span class="kbd">/dev/sda</span>. Posteriormente, se creó una partición Linux <strong>ext4</strong> para el sistema y una partición <strong>EFI en FAT32</strong>, marcada con los flags <strong>boot</strong> y <strong>esp</strong>. Con ello se dejó el disco correctamente preparado para un sistema con arranque UEFI.</p>
+      <img src="../img/uefi/6.png" alt="Resultado final de la configuración de particiones en GParted" class="software-image">
+    </article>
+  </div>
+</section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container" style="text-align: center;">
+  &copy; 2026 Joaquín L. García García · <a href="https://github.com/Joaquin7gg" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">GitHub</a>
+</div>
+  </footer>
+  <div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img" alt="">
+</div>
+
+<script>
+window.addEventListener("load", function () {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = document.getElementById("lightbox-close");
+
+  if (!lightbox || !lightboxImg || !closeBtn) return;
+
+  const images = document.querySelectorAll("main img:not(.section-logo)");
+
+  images.forEach((img) => {
+    img.classList.add("clickable-image");
+
+    img.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      lightboxImg.src = this.dataset.full || this.src;
+      lightboxImg.alt = this.alt || "";
+      lightbox.classList.add("show");
+    });
+  });
+
+  closeBtn.addEventListener("click", function () {
+    lightbox.classList.remove("show");
+  });
+
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) {
+      lightbox.classList.remove("show");
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      lightbox.classList.remove("show");
+    }
+  });
+});
+</script>
+</body>
+</html>

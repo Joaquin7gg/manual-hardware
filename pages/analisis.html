@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Información de componentes | Manual de Hardware</title>
+  <meta name="description" content="Análisis de componentes del equipo con CPU-Z, GPU-Z y CrystalDiskInfo, acompañado de capturas y explicación técnica.">
+  <link rel="icon" type="image/png" href="../img/1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="../index.html">
+        <span class="brand-badge">HW</span>
+        <span>Manual de Hardware y Ciberseguridad</span>
+      </a>
+<nav class="nav-links">
+  <a href="../index.html">Inicio</a>
+  <a href="configuracion.html">Configuración</a>
+  <a href="montaje.html">Montaje</a>
+  <a href="herramientas.html">Herramientas</a>
+  <a class="active" href="analisis.html">Análisis</a>
+  <a href="benchmarks.html">Benchmarks</a>
+  <a href="uefi.html">UEFI</a>
+  <a href="kali.html">Kali</a>
+  <a href="lab-seguro.html">Lab Ético</a>
+  <a href="ciber-labs.html">CiberLabs</a>
+  <a href="sobre-mi.html">Sobre mí</a>
+</nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumbs">
+          <a href="../index.html">Inicio</a>
+          <span>›</span>
+          <span>Información de componentes</span>
+        </div>
+      
+        <h1>Herramientas de información de componentes</h1>
+        <p>En esta sección se analizan distintos componentes del equipo mediante herramientas especializadas. Se muestran capturas reales de CPU-Z, GPU-Z y CrystalDiskInfo para identificar procesador, placa base, memoria RAM, tarjeta gráfica y unidades de almacenamiento, acompañadas de observaciones y conclusiones prácticas.</p>
+      </div>
+    </section>
+
+    <div class="container page-layout">
+      <aside class="toc">
+        <h3>En esta página</h3>
+        <ul>
+          <li><a href="#cpuz">CPU-Z</a></li>
+          <li><a href="#gpuz">GPU-Z</a></li>
+          <li><a href="#crystal">CrystalDiskInfo</a></li>
+        </ul>
+      </aside>
+
+      <div class="content">
+        <section class="content-section" id="cpuz">
+          
+          <div class="section-title-with-logo">
+            <h2>CPU-Z</h2>
+            <img src="../img/inf/17.png" alt="Logo de CPU-Z" class="section-logo">
+          </div>
+
+          <p class="lead">CPU-Z permite obtener información detallada sobre el procesador, la placa base, la memoria RAM y otros parámetros del sistema. En este caso se utiliza para analizar la configuración real del equipo y detectar incluso un problema de rendimiento que afectaba directamente a la CPU.</p>
+
+          <div class="warning-box">
+            <p class="note-title">Incidencia detectada</p>
+            <div>Gracias a esta comprobación se detectó que la CPU estaba rindiendo aproximadamente a la mitad de su potencial, lo que permitió reestablecer el funcionamiento óptimo de la máquina a posteriori.
+            </div>
+            </div>
+        <div class="component-collage-block">
+  <div class="component-collage">
+    <img src="../img/inf/1.png" alt="Captura CPU-Z 1" class="component-collage-img">
+    <img src="../img/inf/2.png" alt="Captura CPU-Z 2" class="component-collage-img">
+    <img src="../img/inf/3.png" alt="Captura CPU-Z 3" class="component-collage-img">
+    <img src="../img/inf/4.png" alt="Captura CPU-Z 4" class="component-collage-img">
+    <img src="../img/inf/5.png" alt="Captura CPU-Z 5" class="component-collage-img component-collage-img-wide">
+  </div>
+
+  <div class="software-shot" style="margin-top: 1.2rem;">
+    <p>En estas capturas se muestran los componentes del ordenador elegido, en este caso el propio del autor. En primer lugar, la CPU es un <strong>AMD Ryzen 9 5900X</strong>. Antes de profundizar, y como ya se ha mencionado anteriormente, gracias a este trabajo, se comprobó que la CPU estaba rindiendo a la mitad de su potencial. La captura de abajo muestra los parámetros que tenía, reducidos a la mitad si lo comparamos con las capturas de arriba. Tras mucho investigar y probar, se logró solucionar entrando en <span class="kbd">msconfig</span>, <span class="kbd">arranque</span>, <span class="kbd">opciones avanzadas</span> y desmarcando la opción de <strong>número de procesadores</strong>. Esto también tuvo un efecto considerable en los benchmarks, como se mostrará más abajo.</p>
+  </div>
+</div>
+ <figure class="single-figure">
+    <img src="../img/inf/6.png" alt="Datos de la CPU a la mitad de su potencial" class="single-figure-image" style="max-width: 400px;">
+    <figcaption class="single-figure-caption">Datos de la CPU a la mitad de su potencial.</figcaption>
+  </figure>
+
+  <div class="software-shot">
+    <p>Continuando con la exposición, se ve que dispone de un <strong>socket AM4</strong>, con <strong>12 núcleos y 24 hilos</strong>. En esta pantalla también se pueden ver las memorias de caché <strong>L1, L2 y L3</strong> (<strong>64 MB en total</strong>), además de las velocidades del reloj y los voltajes que consume. En esa captura está funcionando el <strong>Precision Boost Overdrive (PBO)</strong>, un pequeño overclock para aumentar el rendimiento. Se añadió después de solucionar el problema.</p>
+
+    <p>La siguiente pestaña es la placa base, una <strong>ROG Strix B550-F Gaming WiFi II</strong>. Hay datos de interés, como las especificaciones del bus y la ranura en donde está conectada la tarjeta gráfica. También está la versión de la BIOS, que se actualizó al adquirir el ordenador.</p>
+
+    <p>En la pestaña de memoria encontramos la información de la RAM, donde se muestra que es una <strong>DDR4</strong> con <strong>dos módulos de 16 GB</strong> cada uno. Vemos que funciona en <strong>Dual Channel</strong> con <strong>1800 MHz de frecuencia</strong> (<strong>3600 MHz efectivos</strong>). Una velocidad que también se desbloqueó desde la BIOS, ya que por defecto daba unos 2000.</p>
+
+    <p>En <strong>SPD</strong> se profundiza más en la memoria RAM, y lo hace de manera individual según el canal que se escoja. En este caso, se trata del modelo <strong>G.Skill Trident Z Neo DDR4 3600 PC4-28800 32GB 2x16GB CL16</strong>. En la captura está el slot <strong>B1</strong>, siendo el otro el <strong>B2</strong>, situadas de esta forma para que trabajen en Dual Channel. Hay más datos reseñables, como la latencia. En este caso,<strong>16</strong>, un valor muy competitivo. También aparecen los voltajes que se pueden cambiar desde la BIOS.</p>
+
+    <p>Por último, la tarjeta gráfica. Es una <strong>AMD Radeon RX 7800 XT</strong> con <strong>16 GB de VRAM</strong> y <strong>GDDR6</strong>. Esta GPU permite jugar en <strong>QHD</strong> a la mayoría de juegos actuales y antiguos. Alguna vez se ha probado a “overclockearla” y el rendimiento ha sido óptimo.</p>
+
+    <p>Para dar cierre, añadir algunas fotos del montaje y del resultado final. Es una obra de la que el autor se siente muy orgulloso, ya que se montó desde cero y sin muchos conocimientos, pero que sirvió tomar una decisión importante: estudiar ASIR y descubrir muchas más cosas sobre los PC.</p>
+  </div>
+
+<div class="word-gallery">
+  <figure class="word-gallery-top">
+    <img src="../img/inf/7.png" alt="Momento en el que llegó todo el material" class="word-gallery-img">
+    <figcaption class="word-gallery-caption">Momento en el que llegó todo el material.</figcaption>
+  </figure>
+
+  <div class="word-gallery-middle">
+    <figure>
+      <img src="../img/inf/8.png" alt="Instante en el que inserté el procesador" class="word-gallery-img">
+      <figcaption class="word-gallery-caption">Instante en el que se insertó el procesador.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="../img/inf/9.png" alt="Minutos después de instalar la refrigeración líquida" class="word-gallery-img">
+      <figcaption class="word-gallery-caption">Minutos después de instalar la refrigeración líquida. Sin duda, el paso más complicado.</figcaption>
+    </figure>
+  </div>
+
+  <figure class="word-gallery-bottom">
+    <img src="../img/inf/10.png" alt="Ordenador a pleno rendimiento" class="word-gallery-img">
+    <figcaption class="word-gallery-caption">Ordenador a pleno rendimiento. No pueden faltar las luces gaming y algún adorno.</figcaption>
+  </figure>
+</div>
+</section>
+
+<section class="content-section" id="gpuz">
+  
+  <div class="section-title-with-logo">
+    <h2>GPU-Z</h2>
+    <img src="../img/inf/18.png" alt="Logo de GPU-Z" class="section-logo">
+  </div>
+
+  <p class="lead">GPU-Z permite analizar en detalle la tarjeta gráfica, mostrando datos generales, sensores, temperaturas y velocidades de reloj. En este caso se utiliza para revisar el comportamiento de una AMD Radeon RX 7800 XT tanto en reposo como bajo carga.</p>
+
+  <div class="gpuz-gallery">
+    <figure class="gpuz-gallery-top">
+      <img src="../img/inf/11.png" alt="Datos generales de la tarjeta gráfica en GPU-Z" class="gpuz-gallery-img">
+    </figure>
+
+    <div class="gpuz-gallery-bottom">
+      <figure>
+        <img src="../img/inf/12.png" alt="Sensores de la GPU en reposo" class="gpuz-gallery-img">
+      </figure>
+
+      <figure>
+        <img src="../img/inf/13.png" alt="Sensores de la GPU durante una sesión gaming" class="gpuz-gallery-img">
+      </figure>
+    </div>
+  </div>
+
+  <div class="software-shot" style="margin-top: 1.2rem;">
+    <p>En la primera captura, se observan datos generales de la tarjeta gráfica <strong>AMD Radeon RX 7800 XT</strong>, como su fecha de lanzamiento, la interfaz <strong>Bus</strong> o la versión de drivers que posee. También especifica el tipo de memoria que tiene: <strong>GDDR6</strong> y <strong>VRAM de 16 GB</strong>. También aparece <strong>Resizable BAR</strong>, una opción que se puede activar en la BIOS, que desencadena todo el potencial de la gráfica.</p>
+
+    <p>En la segunda y tercera captura, vemos los sensores. En la segunda están las temperaturas que tiene en reposo, mientras que en la tercera se aprecian las temperaturas que alcanza en una sesión gaming. Como curiosidad, cuando se estaba utilizando el ordenador durante los primeros días, la CPU en reposo alcanzaba los <strong>80 grados</strong>. Tras reajustar los ventiladores de la refrigeración líquida y situarlos en modo extractor, se conseguió bajar esas temperaturas a la mitad.</p>
+  </div>
+
+  <figure class="single-figure">
+    <img src="../img/inf/14.png" alt="Velocidades de los relojes en la GPU" class="single-figure-image" style="max-width: 400px;">
+    <figcaption class="single-figure-caption">Por último, se puede apreciar las velocidades de los relojes en la GPU.</figcaption>
+  </figure>
+</section>
+
+<section class="content-section" id="crystal">
+  
+  <div class="section-title-with-logo">
+    <h2>CrystalDiskInfo</h2>
+    <img src="../img/inf/19.png" alt="Logo de CrystalDiskInfo" class="section-logo">
+  </div>
+
+  <p class="lead">CrystalDiskInfo permite comprobar el estado de salud, la temperatura y otros parámetros relevantes de las unidades de almacenamiento instaladas en el equipo.</p>
+
+  <div class="crystal-gallery">
+    <img src="../img/inf/15.png" alt="Primer disco analizado con CrystalDiskInfo" class="crystal-gallery-img">
+    <img src="../img/inf/16.png" alt="Segundo disco analizado con CrystalDiskInfo" class="crystal-gallery-img">
+  </div>
+
+  <div class="software-shot" style="margin-top: 1.2rem;">
+    <p>En estas dos capturas se pueden apreciar los dos discos duros instalados en el ordenador. Ambos son <strong>M.2</strong>, con <strong>1 TB y 2 TB</strong> de capacidad respectivamente. El <strong>WD Blue</strong> se instaló días después del <strong>Black</strong>, como disco auxiliar, por eso tiene menos horas de uso. La placa base tiene dos ranuras de <strong>M.2</strong>, siendo una <strong>PCIe 4.0</strong> y otra <strong>3.0</strong>. El Black es superior en velocidad y está pensado para gaming, por eso está en la ranura 4.0. Tienen un buen estado de salud y temperatura, además y por suerte, no han recibido avisos críticos.</p>
+  </div>
+</section>
+
+
+      </div>
+      
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container" style="text-align: center;">
+  &copy; 2026 Joaquín L. García García · <a href="https://github.com/Joaquin7gg" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">GitHub</a>
+</div>
+  </footer>
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img" alt="">
+</div>
+
+<script>
+window.addEventListener("load", function () {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = document.getElementById("lightbox-close");
+
+  if (!lightbox || !lightboxImg || !closeBtn) return;
+
+  const images = document.querySelectorAll("main img:not(.section-logo)");
+
+  images.forEach((img) => {
+    img.classList.add("clickable-image");
+
+    img.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      lightboxImg.src = this.dataset.full || this.src;
+      lightboxImg.alt = this.alt || "";
+      lightbox.classList.add("show");
+    });
+  });
+
+  closeBtn.addEventListener("click", function () {
+    lightbox.classList.remove("show");
+  });
+
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) {
+      lightbox.classList.remove("show");
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      lightbox.classList.remove("show");
+    }
+  });
+});
+</script>
+</body>
+</html>

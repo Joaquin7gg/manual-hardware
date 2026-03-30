@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio de hacking ético seguro | Manual de Hardware</title>
+  <meta name="description" content="Bloque dedicado al diseño de un entorno aislado, controlado y documentado para prácticas seguras.">
+  <link rel="icon" type="image/png" href="../img/1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="../index.html">
+        <span class="brand-badge">HW</span>
+        <span>Manual de Hardware y Ciberseguridad</span>
+      </a>
+<nav class="nav-links">
+  <a href="../index.html">Inicio</a>
+  <a href="configuracion.html">Configuración</a>
+  <a href="montaje.html">Montaje</a>
+  <a href="herramientas.html">Herramientas</a>
+  <a href="analisis.html">Análisis</a>
+  <a href="benchmarks.html">Benchmarks</a>
+  <a href="uefi.html">UEFI</a>
+  <a href="kali.html">Kali</a>
+  <a class="active" href="lab-seguro.html">Lab Ético</a>
+  <a href="ciber-labs.html">CiberLabs</a>
+  <a href="sobre-mi.html">Sobre mí</a>
+</nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumbs">
+          <a href="../index.html">Inicio</a>
+          <span>›</span>
+          <span>Laboratorio de hacking ético seguro</span>
+        </div>
+        
+        <h1>Laboratorio de hacking ético seguro</h1>
+        <p>En esta sección se documenta la preparación de un entorno virtualizado, aislado y controlado para realizar prácticas de ciberseguridad sin comprometer la red real del equipo anfitrión ni otros dispositivos externos.</p>
+      </div>
+    </section>
+
+    <div class="container page-layout">
+      <aside class="toc">
+        <h3>En esta página</h3>
+        <ul>
+          <li><a href="#seguro">Laboratorio seguro</a></li>
+        </ul>
+      </aside>
+
+      <div class="content">
+        <section class="content-section" id="seguro">
+          
+          <div class="section-title-with-logo">
+            <h2>Configuración de laboratorio de hacking ético seguro</h2>
+            <img src="/img/lab/3.png" alt="Logo del laboratorio seguro" class="section-logo">
+          </div>
+
+          <p class="lead">Para el desarrollo de un laboratorio de hacking ético seguro se recomienda la configuración de un entorno virtualizado, aislado y controlado, con el objetivo de llevar a cabo prácticas de ciberseguridad sin comprometer la red real del equipo anfitrión ni otros dispositivos externos.</p>
+
+          <p>La implementación se basa en el uso de <strong>VirtualBox</strong>, creando una <strong>red interna específica</strong> para las máquinas virtuales del laboratorio y habilitando un <strong>servidor DHCP propio</strong> para asignar direcciones IP de forma automática dentro de un rango definido. De esta manera, se garantiza un entorno de pruebas seguro, organizado y adecuado para simular escenarios de análisis, ataque controlado y defensa en ciberseguridad.</p>
+
+          <figure class="single-figure">
+            <img src="/img/lab/1.png" alt="Configuración del laboratorio seguro en VirtualBox" class="single-figure-image">
+            <figcaption class="single-figure-caption">Configuración inicial de la red interna del laboratorio seguro.</figcaption>
+          </figure>
+
+          <div class="software-shot">
+            <p>En la captura se observa el uso de la consola de Windows para configurar la red del laboratorio dentro de la carpeta de instalación de Oracle VirtualBox. Primero, se accede al directorio <span class="kbd">C:\Program Files\Oracle\VirtualBox</span>, desde donde se ejecuta el comando <span class="kbd">VBoxManage</span>, que es la herramienta de administración por línea de comandos de VirtualBox.</p>
+
+            <p>Luego, se crea y habilita un servidor DHCP para la red llamada <strong>malfoy</strong> con este criterio de direccionamiento:</p>
+            <ul class="steps">
+              <li><strong>IP del servidor DHCP:</strong> 10.38.1.1</li>
+              <li><strong>Rango de direcciones a entregar:</strong> desde 10.38.1.110 hasta 10.38.1.120</li>
+              <li><strong>Máscara de red:</strong> 255.255.255.0</li>
+            </ul>
+
+            <p>Esto significa que las máquinas virtuales conectadas a esa red interna podrán recibir automáticamente una dirección IP dentro de ese intervalo, facilitando la comunicación entre ellas sin necesidad de configurar cada equipo manualmente.</p>
+
+            <p>Después, con el comando <span class="kbd">vboxmanage list dhcpservers</span>, se verifica que la configuración fue aplicada correctamente. En la salida aparecen dos servidores DHCP:</p>
+            <ul class="steps">
+              <li>uno correspondiente a la red <strong>Host-Only</strong> de VirtualBox (<span class="kbd">192.168.56.0/24</span>)</li>
+              <li>y otro correspondiente a la red interna del laboratorio, llamada <strong>malfoy</strong>, con la subred <span class="kbd">10.38.1.0/24</span></li>
+            </ul>
+
+            <p>En la parte inferior de la salida se confirma que la red <strong>malfoy</strong> quedó habilitada, con:</p>
+            <ul class="steps">
+              <li><strong>Dhcpd IP:</strong> 10.38.1.1</li>
+              <li><strong>LowerIPAddress:</strong> 10.38.1.110</li>
+              <li><strong>UpperIPAddress:</strong> 10.38.1.120</li>
+              <li><strong>NetworkMask:</strong> 255.255.255.0</li>
+              <li><strong>Enabled:</strong> Yes</li>
+            </ul>
+
+            <p>Una vez realizado, en VirtualBox se selecciona, dentro del apartado <strong>Red</strong>, la opción de <strong>Red interna</strong>, tal y como se muestra en la imagen.</p>
+          </div>
+
+          <figure class="single-figure">
+            <img src="/img/lab/2.png" alt="Selección de red interna en VirtualBox" class="single-figure-image">
+            <figcaption class="single-figure-caption">Selección de la red interna dentro de la configuración de VirtualBox.</figcaption>
+          </figure>
+
+          <div class="info-box" style="margin-top: 1.2rem;">
+            <p class="note-title">Conclusión</p>
+            <p>En conclusión, la captura demuestra que los laboratorios fueron configurados sobre una <strong>red virtual privada y segura</strong>, separada de la red principal, permitiendo realizar prácticas de hacking ético en un entorno controlado y minimizando riesgos de afectar sistemas externos.</p>
+          </div>
+
+          <div class="table-wrap" style="margin-top: 1.2rem;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Elemento</th>
+                  <th>Configuración aplicada</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Virtualización</td>
+                  <td>VirtualBox</td>
+                </tr>
+                <tr>
+                  <td>Tipo de red</td>
+                  <td>Red interna</td>
+                </tr>
+                <tr>
+                  <td>Nombre de la red</td>
+                  <td>malfoy</td>
+                </tr>
+                <tr>
+                  <td>Servidor DHCP</td>
+                  <td>Habilitado</td>
+                </tr>
+                <tr>
+                  <td>Subred</td>
+                  <td>10.38.1.0/24</td>
+                </tr>
+                <tr>
+                  <td>Rango DHCP</td>
+                  <td>10.38.1.110 - 10.38.1.120</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container" style="text-align: center;">
+  &copy; 2026 Joaquín L. García García · <a href="https://github.com/Joaquin7gg" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">GitHub</a>
+</div>
+  </footer>
+  <div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img" alt="">
+</div>
+
+<script>
+window.addEventListener("load", function () {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = document.getElementById("lightbox-close");
+
+  if (!lightbox || !lightboxImg || !closeBtn) return;
+
+  const images = document.querySelectorAll("main img:not(.section-logo)");
+
+  images.forEach((img) => {
+    img.classList.add("clickable-image");
+
+    img.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      lightboxImg.src = this.dataset.full || this.src;
+      lightboxImg.alt = this.alt || "";
+      lightbox.classList.add("show");
+    });
+  });
+
+  closeBtn.addEventListener("click", function () {
+    lightbox.classList.remove("show");
+  });
+
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) {
+      lightbox.classList.remove("show");
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      lightbox.classList.remove("show");
+    }
+  });
+});
+</script>
+</body>
+</html>
